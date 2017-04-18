@@ -1,0 +1,30 @@
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\bin\Debug\Painter.exe.config
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\bin\Debug\Painter.exe
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\bin\Debug\Painter.pdb
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.csprojResolveAssemblyReference.cache
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.MainForm.resources
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.Properties.Resources.resources
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.csproj.GenerateResource.Cache
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.exe
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.pdb
+C:\Users\Vova\Desktop\Win-Forms\Неделя 3\Painter\obj\Debug\Painter.AboutForm.resources
+D:\Zaycev\Win-Forms\Painter\bin\Debug\Painter.exe.config
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.exe
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.pdb
+D:\Zaycev\Win-Forms\Painter\bin\Debug\Painter.exe
+D:\Zaycev\Win-Forms\Painter\bin\Debug\Painter.pdb
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.csprojResolveAssemblyReference.cache
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.AboutForm.resources
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.MainForm.resources
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.Properties.Resources.resources
+D:\Zaycev\Win-Forms\Painter\obj\Debug\Painter.csproj.GenerateResource.Cache
+D:\Zaycev\Winners\bin\Debug\Painter.exe.config
+D:\Zaycev\Winners\obj\Debug\Painter.exe
+D:\Zaycev\Winners\obj\Debug\Painter.pdb
+D:\Zaycev\Winners\obj\Debug\Painter.csprojResolveAssemblyReference.cache
+D:\Zaycev\Winners\obj\Debug\Painter.AboutForm.resources
+D:\Zaycev\Winners\obj\Debug\Painter.MainForm.resources
+D:\Zaycev\Winners\obj\Debug\Painter.csproj.GenerateResource.Cache
+D:\Zaycev\Winners\bin\Debug\Painter.exe
+D:\Zaycev\Winners\bin\Debug\Painter.pdb
+D:\Zaycev\Winners\obj\Debug\Painter.Properties.Resources.resources
