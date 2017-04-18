@@ -184,5 +184,20 @@ namespace Painter
                 MainForm_Paint(null, null);
             }
         }
+
+      
+        private void ColorBrashLabel_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            ColorBrashLabel.BackColor = colorDialog1.Color;
+            ColorBrashLabel.Tag = colorDialog1.Color;
+        }
+
+        private void ColorLineLabel_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            ColorLineLabel.BackColor = colorDialog1.Color;
+            ColorLineLabel.Tag = colorDialog1.Color;
+        }
     }
 }

@@ -33,14 +33,24 @@
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
             this.StatusStripBottom = new System.Windows.Forms.StatusStrip();
             this.StatusStripTop = new System.Windows.Forms.StatusStrip();
-            this.LeftPanel = new System.Windows.Forms.Panel();
-            this.Button5 = new System.Windows.Forms.Button();
-            this.Button4 = new System.Windows.Forms.Button();
-            this.Button3 = new System.Windows.Forms.Button();
-            this.Button2 = new System.Windows.Forms.Button();
             this.Button1 = new System.Windows.Forms.Button();
+            this.Button2 = new System.Windows.Forms.Button();
+            this.Button3 = new System.Windows.Forms.Button();
+            this.Button4 = new System.Windows.Forms.Button();
+            this.Button5 = new System.Windows.Forms.Button();
+            this.LeftPanel = new System.Windows.Forms.Panel();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.WhigthLine = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ColorBrashLabel = new System.Windows.Forms.Label();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.ColorBrash = new System.Windows.Forms.TextBox();
+            this.ColorLine = new System.Windows.Forms.TextBox();
+            this.ColorLineLabel = new System.Windows.Forms.Label();
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // HelpToolStripMenuItem
@@ -55,7 +65,7 @@
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.AboutToolStripMenuItem.Text = "About";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -86,63 +96,9 @@
             this.StatusStripTop.Location = new System.Drawing.Point(0, 22);
             this.StatusStripTop.Name = "StatusStripTop";
             this.StatusStripTop.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.StatusStripTop.Size = new System.Drawing.Size(830, 26);
+            this.StatusStripTop.Size = new System.Drawing.Size(830, 68);
             this.StatusStripTop.SizingGrip = false;
             this.StatusStripTop.TabIndex = 3;
-            // 
-            // LeftPanel
-            // 
-            this.LeftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LeftPanel.Controls.Add(this.Button5);
-            this.LeftPanel.Controls.Add(this.Button4);
-            this.LeftPanel.Controls.Add(this.Button3);
-            this.LeftPanel.Controls.Add(this.Button2);
-            this.LeftPanel.Controls.Add(this.Button1);
-            this.LeftPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LeftPanel.Location = new System.Drawing.Point(0, 48);
-            this.LeftPanel.Name = "LeftPanel";
-            this.LeftPanel.Size = new System.Drawing.Size(36, 461);
-            this.LeftPanel.TabIndex = 4;
-            // 
-            // Button5
-            // 
-            this.Button5.Location = new System.Drawing.Point(2, 152);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(30, 30);
-            this.Button5.TabIndex = 4;
-            this.Button5.TabStop = false;
-            this.Button5.Tag = "Circle";
-            this.Button5.UseVisualStyleBackColor = true;
-            // 
-            // Button4
-            // 
-            this.Button4.Location = new System.Drawing.Point(2, 118);
-            this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(30, 30);
-            this.Button4.TabIndex = 3;
-            this.Button4.TabStop = false;
-            this.Button4.Tag = "Circle";
-            this.Button4.UseVisualStyleBackColor = true;
-            // 
-            // Button3
-            // 
-            this.Button3.Location = new System.Drawing.Point(2, 84);
-            this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(30, 30);
-            this.Button3.TabIndex = 2;
-            this.Button3.TabStop = false;
-            this.Button3.Tag = "Circle";
-            this.Button3.UseVisualStyleBackColor = true;
-            // 
-            // Button2
-            // 
-            this.Button2.Location = new System.Drawing.Point(2, 50);
-            this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(30, 30);
-            this.Button2.TabIndex = 1;
-            this.Button2.TabStop = false;
-            this.Button2.Tag = "Circle";
-            this.Button2.UseVisualStyleBackColor = true;
             // 
             // Button1
             // 
@@ -155,11 +111,163 @@
             this.Button1.UseVisualStyleBackColor = true;
             this.Button1.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
+            // Button2
+            // 
+            this.Button2.Location = new System.Drawing.Point(2, 50);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(30, 30);
+            this.Button2.TabIndex = 1;
+            this.Button2.TabStop = false;
+            this.Button2.Tag = "Circle";
+            this.Button2.UseVisualStyleBackColor = true;
+            // 
+            // Button3
+            // 
+            this.Button3.Location = new System.Drawing.Point(2, 84);
+            this.Button3.Name = "Button3";
+            this.Button3.Size = new System.Drawing.Size(30, 30);
+            this.Button3.TabIndex = 2;
+            this.Button3.TabStop = false;
+            this.Button3.Tag = "Circle";
+            this.Button3.UseVisualStyleBackColor = true;
+            // 
+            // Button4
+            // 
+            this.Button4.Location = new System.Drawing.Point(2, 118);
+            this.Button4.Name = "Button4";
+            this.Button4.Size = new System.Drawing.Size(30, 30);
+            this.Button4.TabIndex = 3;
+            this.Button4.TabStop = false;
+            this.Button4.Tag = "Circle";
+            this.Button4.UseVisualStyleBackColor = true;
+            // 
+            // Button5
+            // 
+            this.Button5.Location = new System.Drawing.Point(2, 152);
+            this.Button5.Name = "Button5";
+            this.Button5.Size = new System.Drawing.Size(30, 30);
+            this.Button5.TabIndex = 4;
+            this.Button5.TabStop = false;
+            this.Button5.Tag = "Circle";
+            this.Button5.UseVisualStyleBackColor = true;
+            // 
+            // LeftPanel
+            // 
+            this.LeftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LeftPanel.Controls.Add(this.Button5);
+            this.LeftPanel.Controls.Add(this.Button4);
+            this.LeftPanel.Controls.Add(this.Button3);
+            this.LeftPanel.Controls.Add(this.Button2);
+            this.LeftPanel.Controls.Add(this.Button1);
+            this.LeftPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LeftPanel.Location = new System.Drawing.Point(0, 90);
+            this.LeftPanel.Name = "LeftPanel";
+            this.LeftPanel.Size = new System.Drawing.Size(36, 419);
+            this.LeftPanel.TabIndex = 4;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(165, 42);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(50, 20);
+            this.numericUpDown1.TabIndex = 5;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // WhigthLine
+            // 
+            this.WhigthLine.AccessibleName = "";
+            this.WhigthLine.Enabled = false;
+            this.WhigthLine.ForeColor = System.Drawing.SystemColors.ActiveBorder;
+            this.WhigthLine.Location = new System.Drawing.Point(59, 42);
+            this.WhigthLine.Name = "WhigthLine";
+            this.WhigthLine.ReadOnly = true;
+            this.WhigthLine.Size = new System.Drawing.Size(100, 20);
+            this.WhigthLine.TabIndex = 6;
+            this.WhigthLine.Text = "Ширина линии";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(233, 42);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(134, 20);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
+            // ColorBrashLabel
+            // 
+            this.ColorBrashLabel.BackColor = System.Drawing.Color.Black;
+            this.ColorBrashLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ColorBrashLabel.Location = new System.Drawing.Point(536, 48);
+            this.ColorBrashLabel.Name = "ColorBrashLabel";
+            this.ColorBrashLabel.Size = new System.Drawing.Size(36, 32);
+            this.ColorBrashLabel.TabIndex = 8;
+            this.ColorBrashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ColorBrashLabel.Click += new System.EventHandler(this.ColorBrashLabel_Click);
+            // 
+            // ColorBrash
+            // 
+            this.ColorBrash.BackColor = System.Drawing.SystemColors.Control;
+            this.ColorBrash.Enabled = false;
+            this.ColorBrash.Location = new System.Drawing.Point(516, 25);
+            this.ColorBrash.Name = "ColorBrash";
+            this.ColorBrash.ReadOnly = true;
+            this.ColorBrash.Size = new System.Drawing.Size(80, 20);
+            this.ColorBrash.TabIndex = 9;
+            this.ColorBrash.Text = "Цвет кисти";
+            // 
+            // ColorLine
+            // 
+            this.ColorLine.BackColor = System.Drawing.SystemColors.Control;
+            this.ColorLine.Enabled = false;
+            this.ColorLine.Location = new System.Drawing.Point(403, 25);
+            this.ColorLine.Name = "ColorLine";
+            this.ColorLine.ReadOnly = true;
+            this.ColorLine.Size = new System.Drawing.Size(70, 20);
+            this.ColorLine.TabIndex = 10;
+            this.ColorLine.Text = "Цвет линии";
+            // 
+            // ColorLineLabel
+            // 
+            this.ColorLineLabel.BackColor = System.Drawing.Color.Red;
+            this.ColorLineLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ColorLineLabel.Location = new System.Drawing.Point(419, 48);
+            this.ColorLineLabel.Name = "ColorLineLabel";
+            this.ColorLineLabel.Size = new System.Drawing.Size(36, 32);
+            this.ColorLineLabel.TabIndex = 11;
+            this.ColorLineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ColorLineLabel.Click += new System.EventHandler(this.ColorLineLabel_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 531);
+            this.Controls.Add(this.ColorLineLabel);
+            this.Controls.Add(this.ColorLine);
+            this.Controls.Add(this.ColorBrash);
+            this.Controls.Add(this.ColorBrashLabel);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.WhigthLine);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.LeftPanel);
             this.Controls.Add(this.StatusStripTop);
             this.Controls.Add(this.StatusStripBottom);
@@ -176,6 +284,8 @@
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             this.LeftPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,12 +298,20 @@
         private System.Windows.Forms.MenuStrip MenuStrip;
         private System.Windows.Forms.StatusStrip StatusStripBottom;
         private System.Windows.Forms.StatusStrip StatusStripTop;
-        private System.Windows.Forms.Panel LeftPanel;
-        private System.Windows.Forms.Button Button5;
-        private System.Windows.Forms.Button Button4;
-        private System.Windows.Forms.Button Button3;
-        private System.Windows.Forms.Button Button2;
         private System.Windows.Forms.Button Button1;
+        private System.Windows.Forms.Button Button2;
+        private System.Windows.Forms.Button Button3;
+        private System.Windows.Forms.Button Button4;
+        private System.Windows.Forms.Button Button5;
+        private System.Windows.Forms.Panel LeftPanel;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TextBox WhigthLine;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label ColorBrashLabel;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.TextBox ColorBrash;
+        private System.Windows.Forms.TextBox ColorLine;
+        private System.Windows.Forms.Label ColorLineLabel;
     }
 }
 

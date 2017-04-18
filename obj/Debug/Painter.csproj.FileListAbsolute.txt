@@ -28,3 +28,13 @@ D:\Zaycev\Winners\obj\Debug\Painter.csproj.GenerateResource.Cache
 D:\Zaycev\Winners\bin\Debug\Painter.exe
 D:\Zaycev\Winners\bin\Debug\Painter.pdb
 D:\Zaycev\Winners\obj\Debug\Painter.Properties.Resources.resources
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\bin\Debug\Painter.exe.config
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.exe
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.pdb
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\bin\Debug\Painter.exe
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\bin\Debug\Painter.pdb
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.csprojResolveAssemblyReference.cache
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.AboutForm.resources
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.MainForm.resources
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.Properties.Resources.resources
+D:\П11816\Aladzyin\виндовсформс\zzz\Winners\obj\Debug\Painter.csproj.GenerateResource.Cache
