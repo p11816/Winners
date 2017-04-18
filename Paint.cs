@@ -55,7 +55,7 @@ namespace Painter
         private void InitializeImagesForButtons()
         {
             imgForButtons.ImageSize = new Size(buttonsForShape[(int)(Button.Ellipse)].Size.Width - 13, buttonsForShape[(int)(Button.Ellipse)].Size.Height - 13);
-            imgForButtons.Images.Add(Image.FromFile("circle.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../circle.png"));
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
         }
