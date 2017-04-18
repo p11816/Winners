@@ -12,7 +12,7 @@ namespace Painter
 {
     public partial class MainForm : Form
     {
-        private List<Shape> shapes = new List<Shape>();
+        private List<Shape> shapes = new List<Shape>(); // фигуры
         private List<System.Windows.Forms.Button> buttonsForShape = new List<System.Windows.Forms.Button>();
         private AboutForm about;
         private ImageList imgForButtons = new ImageList();
@@ -23,6 +23,7 @@ namespace Painter
         private Point shapeCenter;
         private bool isDrawing = false;
         private bool isChosen = false;
+        private SolidBrush brush;
 
         private enum Button
         {
@@ -39,8 +40,6 @@ namespace Painter
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
             buttonColor = Button5.BackColor;
-
-            
         }
 
         private void InitializeButtonsForShape()
@@ -92,7 +91,7 @@ namespace Painter
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
-            if(activeButton != Button.None)
+            if (activeButton != Button.None)
             {
                 shapeCenter = new Point(e.X, e.Y);
                 shapes.Add(new Ellipse(e.X, e.Y, 0, 0));
@@ -102,22 +101,35 @@ namespace Painter
             else
             {
                 delta = new Point(e.X, e.Y);
-                
+                int index = -1;
+
                 foreach (Shape s in shapes)
                 {
+                    index++;
                     if (s.isInside(e.X, e.Y))
                     {
                         this.Text = "Выбран элемент №" + s.Id;
-                        chosenElement = s.Id - 1;
+                        chosenElement = index;
                         isChosen = true;
-                    }   
+                    }
+                }
+
+                if(isChosen)
+                {
+                    SelectElement();
                 }
             }
         }
 
+        private void SelectElement()
+        {
+            Timer.Interval = 1000;
+            Timer.Start();
+        }
+
         private void ShapeButton_Click(object sender, EventArgs e)
         {
-            if(activeButton != Button.None)
+            if (activeButton != Button.None)
             {
                 buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
             }
@@ -142,6 +154,13 @@ namespace Painter
             {
                 buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
                 activeButton = Button.None;
+                
+            }
+
+            else if (e.KeyCode == Keys.Delete && isChosen)
+            {
+                shapes.RemoveAt(chosenElement);
+                MainForm_Paint(null, null);
             }
 
             isChosen = false;
@@ -176,13 +195,18 @@ namespace Painter
 
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left && isChosen && shapes[chosenElement].isInside(e.X, e.Y))
+            if (e.Button == MouseButtons.Left && isChosen && shapes[chosenElement].isInside(e.X, e.Y))
             {
                 shapes[chosenElement].point = new Point(shapes[chosenElement].point.X - delta.X + e.X,
                     shapes[chosenElement].point.Y - delta.Y + e.Y);
                 delta = new Point(e.X, e.Y);
                 MainForm_Paint(null, null);
             }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+           
         }
     }
 }
