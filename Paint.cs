@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Painter
 {
@@ -24,6 +25,24 @@ namespace Painter
         private bool isDrawing = false;
         private bool isChosen = false;
 
+        private SaveFileDialog seveFileDialog;
+        private OpenFileDialog openFileDialog;
+
+        private void InitializeSaveFileDialog()
+        {
+            seveFileDialog = new SaveFileDialog();
+            seveFileDialog.Filter = "Xml documents |*.xml";
+            seveFileDialog.FileName = "NewFile.xml";
+            seveFileDialog.FileOk += seveFileDialog_FileOk;
+        }
+
+        private void InitializeOpenFileDialog()
+        {
+            openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Xml documents |*.xml";
+            openFileDialog.FileOk += openFileDialog_FileOk;
+        }
+
         private enum Button
         {
             Ellipse,
@@ -39,8 +58,8 @@ namespace Painter
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
             buttonColor = Button5.BackColor;
-
-            
+            InitializeSaveFileDialog();
+            InitializeOpenFileDialog();            
         }
 
         private void InitializeButtonsForShape()
@@ -184,5 +203,41 @@ namespace Painter
                 MainForm_Paint(null, null);
             }
         }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            seveFileDialog.ShowDialog();
+        }
+
+        void seveFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            string name = seveFileDialog.FileName;
+            try
+            {
+                using (StreamWriter file = new StreamWriter(name))
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                seveFileDialog.FileName = "NewFile.xml";
+            }
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.ShowDialog();
+        }
+        void openFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            var file = openFileDialog.OpenFile();
+            //throw new NotImplementedException();
+        }
+
     }
 }
