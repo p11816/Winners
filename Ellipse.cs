@@ -22,10 +22,8 @@ namespace Painter
         }
         public override void Paint(System.Drawing.Graphics g)
         {
-
             g.FillEllipse(brush, point.X, point.Y, 2* radiusV, 2* radiusH);
             g.DrawEllipse(pen, point.X, point.Y, 2 * radiusV, 2 * radiusH);
-
         }
         public override bool isInside(int X, int Y)
         {

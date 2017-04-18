@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip = new System.Windows.Forms.MenuStrip();
@@ -40,7 +39,6 @@
             this.Button3 = new System.Windows.Forms.Button();
             this.Button2 = new System.Windows.Forms.Button();
             this.Button1 = new System.Windows.Forms.Button();
-            this.Timer = new System.Windows.Forms.Timer(this.components);
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             this.SuspendLayout();
@@ -157,11 +155,6 @@
             this.Button1.UseVisualStyleBackColor = true;
             this.Button1.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
-            // Timer
-            // 
-            this.Timer.Interval = 250;
-            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -201,7 +194,6 @@
         private System.Windows.Forms.Button Button3;
         private System.Windows.Forms.Button Button2;
         private System.Windows.Forms.Button Button1;
-        private System.Windows.Forms.Timer Timer;
     }
 }
 
