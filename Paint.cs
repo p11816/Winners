@@ -365,6 +365,21 @@ namespace Painter
                 MainForm_Paint(null, null);
             }
 
+            else if(isDrawing)
+            {
+                int width = Math.Abs(e.X - shapeCenter.X);
+                int height = Math.Abs(e.Y - shapeCenter.Y);
+
+                int x = e.X < shapeCenter.X ? e.X : shapeCenter.X;
+                int y = e.Y < shapeCenter.Y ? e.Y : shapeCenter.Y;
+
+                shapes[shapes.Count - 1].point.X = x;
+                shapes[shapes.Count - 1].point.Y = y;
+                shapes[shapes.Count - 1].width = width;
+                shapes[shapes.Count - 1].height = height;
+                MainForm_Paint(null, null);
+            }
+
             // условие при котором фигуру нужно перетаскивать
             else if (e.Button == MouseButtons.Left && isChosen && frames[chosenElement].Contains(new Point(e.X, e.Y)))
             {
