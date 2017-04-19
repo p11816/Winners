@@ -41,6 +41,7 @@
             this.Button3 = new System.Windows.Forms.Button();
             this.Button4 = new System.Windows.Forms.Button();
             this.LeftPanel = new System.Windows.Forms.Panel();
+            this.Button5 = new System.Windows.Forms.Button();
             this.WhigthLine = new System.Windows.Forms.TextBox();
             this.ColorBrashLabel = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
@@ -49,7 +50,6 @@
             this.ColorLineLabel = new System.Windows.Forms.Label();
             this.LineWhigth1 = new System.Windows.Forms.ComboBox();
             this.PicterLineWhigth = new System.Windows.Forms.PictureBox();
-            this.Button5 = new System.Windows.Forms.Button();
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).BeginInit();
@@ -184,6 +184,17 @@
             this.LeftPanel.Size = new System.Drawing.Size(36, 419);
             this.LeftPanel.TabIndex = 4;
             // 
+            // Button5
+            // 
+            this.Button5.Location = new System.Drawing.Point(2, 152);
+            this.Button5.Name = "Button5";
+            this.Button5.Size = new System.Drawing.Size(30, 30);
+            this.Button5.TabIndex = 4;
+            this.Button5.TabStop = false;
+            this.Button5.Tag = "Bezier";
+            this.Button5.UseVisualStyleBackColor = true;
+            this.Button5.Click += new System.EventHandler(this.ShapeButton_Click);
+            // 
             // WhigthLine
             // 
             this.WhigthLine.AccessibleName = "";
@@ -242,6 +253,8 @@
             // 
             // LineWhigth1
             // 
+            this.LineWhigth1.AllowDrop = true;
+            this.LineWhigth1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LineWhigth1.FormattingEnabled = true;
             this.LineWhigth1.Location = new System.Drawing.Point(176, 41);
             this.LineWhigth1.MaxDropDownItems = 5;
@@ -257,17 +270,6 @@
             this.PicterLineWhigth.Size = new System.Drawing.Size(163, 28);
             this.PicterLineWhigth.TabIndex = 7;
             this.PicterLineWhigth.TabStop = false;
-            // 
-            // Button5
-            // 
-            this.Button5.Location = new System.Drawing.Point(2, 152);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(30, 30);
-            this.Button5.TabIndex = 4;
-            this.Button5.TabStop = false;
-            this.Button5.Tag = "Bezier";
-            this.Button5.UseVisualStyleBackColor = true;
-            this.Button5.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // MainForm
             // 

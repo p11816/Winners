@@ -322,7 +322,7 @@ namespace Painter
                 shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
                 width = shapes[shapes.Count - 1].width = Math.Abs(shapeCenter.X - e.X);
                 height = shapes[shapes.Count - 1].height = Math.Abs(shapeCenter.Y - e.Y);
-                frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width, height);
+                frames[frames.Count - 1] = new Rectangle(center.X - 20, center.Y - 20, width + 40, height + 40);
                 MainForm_Paint(null, null);
             }
 
@@ -342,11 +342,11 @@ namespace Painter
                 {
                     case FrameEdge.Top:
                         delta = new Point(0, -(e.Y - frames[chosenElement].Top));
-                        shapes[chosenElement].point.Y = e.Y;
+                        shapes[chosenElement].point.Y = e.Y + 20;
                         break;
                     case FrameEdge.Left:
                         delta = new Point(-(e.X - frames[chosenElement].X), 0);
-                        shapes[chosenElement].point.X = e.X;
+                        shapes[chosenElement].point.X = e.X + 20;
                         break;
                     case FrameEdge.Right:
                         delta = new Point(e.X - (frames[chosenElement].Right), 0);
@@ -360,8 +360,8 @@ namespace Painter
 
                 height = shapes[chosenElement].height += 2 * delta.Y;
                 width = shapes[chosenElement].width += 2 * delta.X;
-                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
-                    width, height);
+                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X - 20, shapes[chosenElement].point.Y - 20,
+                   width + 40, height + 40);
                 MainForm_Paint(null, null);
             }
 
@@ -371,7 +371,7 @@ namespace Painter
                 shapes[chosenElement].point = new Point(shapes[chosenElement].point.X - delta.X + e.X,
                     shapes[chosenElement].point.Y - delta.Y + e.Y);
                 delta = new Point(e.X, e.Y);
-                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
+                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X - 20, shapes[chosenElement].point.Y - 20,
                     frames[chosenElement].Width, frames[chosenElement].Height);
                 MainForm_Paint(null, null);
             }
