@@ -72,8 +72,8 @@ namespace Painter
             buttonColor = Button5.BackColor;
 
             InitializeSaveFileDialog();
-            InitializeOpenFileDialog();            
-            
+            InitializeOpenFileDialog();
+
         }
 
         private void InitializeButtonsForShape()
@@ -131,7 +131,7 @@ namespace Painter
                 pen.Width = 5;
                 g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.White)), frames[chosenElement]);
                 g.DrawRectangle(pen, frames[chosenElement]);
-        }
+            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -144,20 +144,20 @@ namespace Painter
             Rectangle rect = frames[chosenElement];
             FrameEdge result = FrameEdge.None;
 
-            
-            if(y >= rect.Y - 5 && y <= rect.Y + 5 && x <= rect.X + rect.Width && x >= rect.X)
+
+            if (y >= rect.Y - 5 && y <= rect.Y + 5 && x <= rect.X + rect.Width && x >= rect.X)
             {
                 Cursor = Cursors.SizeNS;
                 result = FrameEdge.Top;
             }
 
-            else if(y <= rect.Y + rect.Height + 5 && y >= rect.Y + rect.Height - 5 && x <= rect.X + rect.Width && x >= rect.X)
+            else if (y <= rect.Y + rect.Height + 5 && y >= rect.Y + rect.Height - 5 && x <= rect.X + rect.Width && x >= rect.X)
             {
                 Cursor = Cursors.SizeNS;
                 result = FrameEdge.Bottom;
             }
 
-            
+
             else if (x >= rect.X - 5 && x <= rect.X + 5 && y <= rect.Y + rect.Height && y >= rect.Y)
             {
                 Cursor = Cursors.SizeWE;
@@ -189,15 +189,15 @@ namespace Painter
             {
                 delta = new Point(e.X, e.Y);
                 int index = -1;
-                
+
                 foreach (Shape s in shapes)
                 {
                     index++;
-                    if (s.isInside(e.X, e.Y))
+                    if (frames[index].Contains(e.X, e.Y))
                     {
                         chosenElement = index;
                         isChosen = true;
-                    }   
+                    }
                 }
 
                 if (isChosen) MainForm_Paint(null, null);
@@ -206,16 +206,16 @@ namespace Painter
 
         private void ShapeButton_Click(object sender, EventArgs e) // нажатие на кнопку с фигурой
         {
-            if(e is MouseEventArgs)
+            if (e is MouseEventArgs)
             {
                 if (activeButton != Button.None)
                 {
-                buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
-            }
+                    buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
+                }
                 isChosen = false;
-            ((Control)sender).BackColor = Color.LightBlue;
-            ChangeActiveButton(sender);
-        }
+                ((Control)sender).BackColor = Color.LightBlue;
+                ChangeActiveButton(sender);
+            }
         }
 
         private void ChangeActiveButton(object sender)
@@ -230,7 +230,7 @@ namespace Painter
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape && activeButton == Button.None)
+            if (e.KeyCode == Keys.Escape && activeButton == Button.None)
             {
                 isChosen = false;
                 MainForm_Paint(null, null);
@@ -248,7 +248,7 @@ namespace Painter
             {
                 shapes.RemoveAt(chosenElement);
                 frames.RemoveAt(chosenElement);
-            isChosen = false;
+                isChosen = false;
                 MainForm_Paint(null, null);
             }
         }
@@ -270,7 +270,7 @@ namespace Painter
                         shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
                         width = ((Ellipse)shapes[shapes.Count - 1]).width = Math.Abs(shapeCenter.X - e.X) / 2;
                         height = ((Ellipse)shapes[shapes.Count - 1]).height = Math.Abs(shapeCenter.Y - e.Y) / 2;
-                        frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width*2, height*2);
+                        frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width * 2, height * 2);
                         break;
                     case Button.None:
                         break;
@@ -284,40 +284,40 @@ namespace Painter
             else if (isResizing) isResizing = false;
         }
 
-       
+
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (isResizing && e.Button == MouseButtons.Left)
             {
-               
-                    int width = 0;
-                    int height = 0;
 
-                    switch (edge)
-                    {
-                        case FrameEdge.Top:
-                            delta = new Point(0, -(e.Y - frames[chosenElement].Top));
-                            shapes[chosenElement].point.Y = e.Y;
-                            break;
-                        case FrameEdge.Left:
-                            delta = new Point(-(e.X - frames[chosenElement].X), 0);
-                            shapes[chosenElement].point.X = e.X;
-                            break;
-                        case FrameEdge.Right:
-                            delta = new Point(e.X - (frames[chosenElement].Right), 0);
-                            shapes[chosenElement].point.X += delta.X > 0 ? (-delta.X) : Math.Abs(delta.X);
-                            break;
-                        case FrameEdge.Bottom:
-                            delta = new Point(0, e.Y - frames[chosenElement].Bottom);
-                            shapes[chosenElement].point.Y += delta.Y > 0 ? (-delta.Y) : Math.Abs(delta.Y);
-                            break;
-                    }
+                int width = 0;
+                int height = 0;
 
-                    height = ((Ellipse)shapes[chosenElement]).height += delta.Y;
-                    width = ((Ellipse)shapes[chosenElement]).width += delta.X;
-                    frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
-                        width * 2, height * 2);
-                    MainForm_Paint(null, null);
+                switch (edge)
+                {
+                    case FrameEdge.Top:
+                        delta = new Point(0, -(e.Y - frames[chosenElement].Top));
+                        shapes[chosenElement].point.Y = e.Y;
+                        break;
+                    case FrameEdge.Left:
+                        delta = new Point(-(e.X - frames[chosenElement].X), 0);
+                        shapes[chosenElement].point.X = e.X;
+                        break;
+                    case FrameEdge.Right:
+                        delta = new Point(e.X - (frames[chosenElement].Right), 0);
+                        shapes[chosenElement].point.X += delta.X > 0 ? (-delta.X) : Math.Abs(delta.X);
+                        break;
+                    case FrameEdge.Bottom:
+                        delta = new Point(0, e.Y - frames[chosenElement].Bottom);
+                        shapes[chosenElement].point.Y += delta.Y > 0 ? (-delta.Y) : Math.Abs(delta.Y);
+                        break;
+                }
+
+                height = ((Ellipse)shapes[chosenElement]).height += delta.Y;
+                width = ((Ellipse)shapes[chosenElement]).width += delta.X;
+                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
+                    width * 2, height * 2);
+                MainForm_Paint(null, null);
             }
 
             // условие при котором фигуру нужно перетаскивать
@@ -373,7 +373,7 @@ namespace Painter
             //throw new NotImplementedException();
         }
 
-      
+
         private void ColorBrashLabel_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
@@ -387,7 +387,7 @@ namespace Painter
             ColorLineLabel.BackColor = colorDialog1.Color;
             ColorLineLabel.Tag = colorDialog1.Color;
         }
-        
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             LineWhigth1.Tag = Convert.ToInt32(LineWhigth1.Items[LineWhigth1.SelectedIndex]);
