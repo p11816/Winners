@@ -37,7 +37,7 @@
             // LogoPictureBox
             // 
             this.LogoPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.LogoPictureBox.ImageLocation = "logo.png";
+            this.LogoPictureBox.ImageLocation = "../../logo.png";
             this.LogoPictureBox.Location = new System.Drawing.Point(63, 24);
             this.LogoPictureBox.Name = "LogoPictureBox";
             this.LogoPictureBox.Size = new System.Drawing.Size(220, 134);

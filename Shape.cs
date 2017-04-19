@@ -13,6 +13,7 @@ namespace Painter
 
         static private int lastId = 0;
 
+        //расстояние между двумя точками
         public static float Distance(Point a, Point b)
         {
             return (float)Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
@@ -34,8 +35,10 @@ namespace Painter
         // заливка
         public Brush brush;
 
+        //попал ли курсор внутрь
         public abstract bool isInside(int p1, int p2);
 
-        public abstract bool isOnTheBorder(int x, int y); // попал ли курсор на границу
+        // попал ли курсор на границу
+        //public abstract bool isOnTheBorder(int x, int y); 
     }
 }
