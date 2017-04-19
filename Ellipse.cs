@@ -27,8 +27,8 @@ namespace Painter
         }
         public override bool isInside(int X, int Y)
         {
-            bool result = this.isInside(X, Y, radiusV, radiusH);            
-            return result;   
+            //bool result = this.isInside(X, Y, radiusV, radiusH);            
+            return true;   
         }
 
         private bool isInside(int X, int Y, int radiusV, int radiusH)
