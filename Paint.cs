@@ -51,6 +51,12 @@ namespace Painter
             buttonsForShape.Add(Button3);
             buttonsForShape.Add(Button4);
             buttonsForShape.Add(Button5);
+            LineWhigth1.Items.Add("3");
+            LineWhigth1.Items.Add("5");
+            LineWhigth1.Items.Add("7");
+            LineWhigth1.Items.Add("9");
+            LineWhigth1.Items.Add("11");
+            LineWhigth1.SelectedIndex = 0;
         }
 
         private void InitializeImagesForButtons()
@@ -205,8 +211,14 @@ namespace Painter
         
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LineWhigth1.Tag = Convert.ToInt32(LineWhigth1.Items[LineWhigth1.SelectedIndex]);
             string pathPict = "..\\..\\Line";
-            pathPict += numericUpDown1.Value + ".jpg";
+            pathPict += LineWhigth1.Tag + ".jpg";
             PicterLineWhigth.Image = Image.FromFile(pathPict);
         }
     }

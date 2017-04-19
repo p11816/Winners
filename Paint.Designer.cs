@@ -39,7 +39,6 @@
             this.Button4 = new System.Windows.Forms.Button();
             this.Button5 = new System.Windows.Forms.Button();
             this.LeftPanel = new System.Windows.Forms.Panel();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.WhigthLine = new System.Windows.Forms.TextBox();
             this.PicterLineWhigth = new System.Windows.Forms.PictureBox();
             this.ColorBrashLabel = new System.Windows.Forms.Label();
@@ -47,9 +46,9 @@
             this.ColorBrash = new System.Windows.Forms.TextBox();
             this.ColorLine = new System.Windows.Forms.TextBox();
             this.ColorLineLabel = new System.Windows.Forms.Label();
+            this.LineWhigth1 = new System.Windows.Forms.ComboBox();
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).BeginInit();
             this.SuspendLayout();
             // 
@@ -165,34 +164,6 @@
             this.LeftPanel.Size = new System.Drawing.Size(36, 419);
             this.LeftPanel.TabIndex = 4;
             // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Location = new System.Drawing.Point(165, 42);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            11,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(50, 20);
-            this.numericUpDown1.TabIndex = 5;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
             // WhigthLine
             // 
             this.WhigthLine.AccessibleName = "";
@@ -260,18 +231,28 @@
             this.ColorLineLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ColorLineLabel.Click += new System.EventHandler(this.ColorLineLabel_Click);
             // 
+            // LineWhigth1
+            // 
+            this.LineWhigth1.FormattingEnabled = true;
+            this.LineWhigth1.Location = new System.Drawing.Point(176, 41);
+            this.LineWhigth1.MaxDropDownItems = 5;
+            this.LineWhigth1.Name = "LineWhigth1";
+            this.LineWhigth1.Size = new System.Drawing.Size(42, 21);
+            this.LineWhigth1.TabIndex = 12;
+            this.LineWhigth1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 531);
+            this.Controls.Add(this.LineWhigth1);
             this.Controls.Add(this.ColorLineLabel);
             this.Controls.Add(this.ColorLine);
             this.Controls.Add(this.ColorBrash);
             this.Controls.Add(this.ColorBrashLabel);
             this.Controls.Add(this.PicterLineWhigth);
             this.Controls.Add(this.WhigthLine);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.LeftPanel);
             this.Controls.Add(this.StatusStripTop);
             this.Controls.Add(this.StatusStripBottom);
@@ -288,7 +269,6 @@
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             this.LeftPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -308,7 +288,6 @@
         private System.Windows.Forms.Button Button4;
         private System.Windows.Forms.Button Button5;
         private System.Windows.Forms.Panel LeftPanel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.TextBox WhigthLine;
         private System.Windows.Forms.PictureBox PicterLineWhigth;
         private System.Windows.Forms.Label ColorBrashLabel;
@@ -316,6 +295,7 @@
         private System.Windows.Forms.TextBox ColorBrash;
         private System.Windows.Forms.TextBox ColorLine;
         private System.Windows.Forms.Label ColorLineLabel;
+        private System.Windows.Forms.ComboBox LineWhigth1;
     }
 }
 
