@@ -73,7 +73,7 @@ namespace Painter
 
             InitializeSaveFileDialog();
             InitializeOpenFileDialog();            
-
+            
         }
 
         private void InitializeButtonsForShape()
@@ -83,6 +83,12 @@ namespace Painter
             buttonsForShape.Add(Button3);
             buttonsForShape.Add(Button4);
             buttonsForShape.Add(Button5);
+            LineWhigth1.Items.Add("3");
+            LineWhigth1.Items.Add("5");
+            LineWhigth1.Items.Add("7");
+            LineWhigth1.Items.Add("9");
+            LineWhigth1.Items.Add("11");
+            LineWhigth1.SelectedIndex = 0;
         }
 
         private void InitializeImagesForButtons()
@@ -91,6 +97,7 @@ namespace Painter
             imgForButtons.Images.Add(Image.FromFile("../../circle.png"));
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
+            PicterLineWhigth.Image = Image.FromFile("..\\..\\Line3.jpg");
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,7 +131,7 @@ namespace Painter
                 pen.Width = 5;
                 g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.White)), frames[chosenElement]);
                 g.DrawRectangle(pen, frames[chosenElement]);
-            }
+        }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -182,7 +189,7 @@ namespace Painter
             {
                 delta = new Point(e.X, e.Y);
                 int index = -1;
-
+                
                 foreach (Shape s in shapes)
                 {
                     index++;
@@ -190,7 +197,7 @@ namespace Painter
                     {
                         chosenElement = index;
                         isChosen = true;
-                    }
+                    }   
                 }
 
                 if (isChosen) MainForm_Paint(null, null);
@@ -203,12 +210,12 @@ namespace Painter
             {
                 if (activeButton != Button.None)
                 {
-                    buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
-                }
-                isChosen = false;
-                ((Control)sender).BackColor = Color.LightBlue;
-                ChangeActiveButton(sender);
+                buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
             }
+                isChosen = false;
+            ((Control)sender).BackColor = Color.LightBlue;
+            ChangeActiveButton(sender);
+        }
         }
 
         private void ChangeActiveButton(object sender)
@@ -241,7 +248,7 @@ namespace Painter
             {
                 shapes.RemoveAt(chosenElement);
                 frames.RemoveAt(chosenElement);
-                isChosen = false;
+            isChosen = false;
                 MainForm_Paint(null, null);
             }
         }
@@ -277,6 +284,7 @@ namespace Painter
             else if (isResizing) isResizing = false;
         }
 
+       
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             if (isResizing && e.Button == MouseButtons.Left)
@@ -363,6 +371,29 @@ namespace Painter
         {
             var file = openFileDialog.OpenFile();
             //throw new NotImplementedException();
+        }
+
+      
+        private void ColorBrashLabel_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            ColorBrashLabel.BackColor = colorDialog1.Color;
+            ColorBrashLabel.Tag = colorDialog1.Color;
+        }
+
+        private void ColorLineLabel_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            ColorLineLabel.BackColor = colorDialog1.Color;
+            ColorLineLabel.Tag = colorDialog1.Color;
+        }
+        
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LineWhigth1.Tag = Convert.ToInt32(LineWhigth1.Items[LineWhigth1.SelectedIndex]);
+            string pathPict = "..\\..\\Line";
+            pathPict += LineWhigth1.Tag + ".jpg";
+            PicterLineWhigth.Image = Image.FromFile(pathPict);
         }
 
     }
