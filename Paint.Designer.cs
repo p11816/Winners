@@ -40,7 +40,6 @@
             this.Button2 = new System.Windows.Forms.Button();
             this.Button3 = new System.Windows.Forms.Button();
             this.Button4 = new System.Windows.Forms.Button();
-            this.Button5 = new System.Windows.Forms.Button();
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.WhigthLine = new System.Windows.Forms.TextBox();
             this.ColorBrashLabel = new System.Windows.Forms.Label();
@@ -144,8 +143,9 @@
             this.Button2.Size = new System.Drawing.Size(30, 30);
             this.Button2.TabIndex = 1;
             this.Button2.TabStop = false;
-            this.Button2.Tag = "Circle";
+            this.Button2.Tag = "Rectangle";
             this.Button2.UseVisualStyleBackColor = true;
+            this.Button2.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // Button3
             // 
@@ -154,8 +154,9 @@
             this.Button3.Size = new System.Drawing.Size(30, 30);
             this.Button3.TabIndex = 2;
             this.Button3.TabStop = false;
-            this.Button3.Tag = "Circle";
+            this.Button3.Tag = "Triangle";
             this.Button3.UseVisualStyleBackColor = true;
+            this.Button3.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // Button4
             // 
@@ -164,23 +165,13 @@
             this.Button4.Size = new System.Drawing.Size(30, 30);
             this.Button4.TabIndex = 3;
             this.Button4.TabStop = false;
-            this.Button4.Tag = "Circle";
+            this.Button4.Tag = "Rhomb";
             this.Button4.UseVisualStyleBackColor = true;
-            // 
-            // Button5
-            // 
-            this.Button5.Location = new System.Drawing.Point(2, 152);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(30, 30);
-            this.Button5.TabIndex = 4;
-            this.Button5.TabStop = false;
-            this.Button5.Tag = "Circle";
-            this.Button5.UseVisualStyleBackColor = true;
+            this.Button4.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // LeftPanel
             // 
             this.LeftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LeftPanel.Controls.Add(this.Button5);
             this.LeftPanel.Controls.Add(this.Button4);
             this.LeftPanel.Controls.Add(this.Button3);
             this.LeftPanel.Controls.Add(this.Button2);
@@ -308,7 +299,6 @@
         private System.Windows.Forms.StatusStrip StatusStripTop;
         
         private System.Windows.Forms.Panel LeftPanel;
-        private System.Windows.Forms.Button Button5;
         private System.Windows.Forms.Button Button4;
         private System.Windows.Forms.Button Button3;
         private System.Windows.Forms.Button Button2;

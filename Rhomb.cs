@@ -8,9 +8,6 @@ namespace Painter
 {
     class Rhomb : Shape 
     {
-        public int height;
-        public int width;
-
         public Rhomb(int x, int y, int height, int width)
         {
             point = new System.Drawing.Point(x, y);
@@ -29,12 +26,6 @@ namespace Painter
             fillPoint[0].X = point.X + 1;
             fillPoint[0].Y = point.Y + halfH;
             g.FillClosedCurve(brush, fillPoint);
-        }
-
-        public override bool isInside(int X, int Y)
-        {
-          
-            return false;
         }
     }
 }

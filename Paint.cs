@@ -59,6 +59,9 @@ namespace Painter
         private enum Button
         {
             Ellipse,
+            Rectangle,
+            Triangle,
+            Rhomb,
             None
         }
 
@@ -70,8 +73,6 @@ namespace Painter
             WindowState = FormWindowState.Maximized;
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
-            buttonColor = Button5.BackColor;
-
             InitializeSaveFileDialog();
             InitializeOpenFileDialog();
             graphics = this.CreateGraphics();
@@ -84,7 +85,6 @@ namespace Painter
             buttonsForShape.Add(Button2);
             buttonsForShape.Add(Button3);
             buttonsForShape.Add(Button4);
-            buttonsForShape.Add(Button5);
             LineWhigth1.Items.Add("3");
             LineWhigth1.Items.Add("5");
             LineWhigth1.Items.Add("7");
@@ -97,8 +97,15 @@ namespace Painter
         {
             imgForButtons.ImageSize = new Size(buttonsForShape[(int)(Button.Ellipse)].Size.Width - 13, buttonsForShape[(int)(Button.Ellipse)].Size.Height - 13);
             imgForButtons.Images.Add(Image.FromFile("../../circle.png"));
-            buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
+            imgForButtons.Images.Add(Image.FromFile("../../rectangle.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../triangle.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../rhomb.png"));
+            buttonsForShape[(int)(Button.Rhomb)].ImageList = buttonsForShape[(int)(Button.Triangle)].ImageList = buttonsForShape[(int)(Button.Rectangle)].ImageList
+                = buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
+            buttonsForShape[(int)(Button.Rectangle)].ImageIndex = 1;
+            buttonsForShape[(int)(Button.Triangle)].ImageIndex = 2;
+            buttonsForShape[(int)(Button.Rhomb)].ImageIndex = 3;
             PicterLineWhigth.Image = Image.FromFile("..\\..\\Line3.jpg");
         }
 
@@ -129,10 +136,7 @@ namespace Painter
             buffer.Graphics.Clear(SystemColors.Control);
             
             // рисуем все фигуры
-            foreach (Shape s in this.shapes)
-            {
-                s.Paint(buffer.Graphics);
-            }
+            foreach (Shape s in this.shapes) { s.Paint(buffer.Graphics); }
 
             if (isChosen)
             {
@@ -191,7 +195,24 @@ namespace Painter
             if (activeButton != Button.None)
             {
                 shapeCenter = new Point(e.X, e.Y);
-                shapes.Add(new Ellipse(e.X, e.Y, 0, 0));
+
+
+                switch (activeButton)
+                {
+                    case Button.Ellipse:
+                        shapes.Add(new Ellipse(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Rectangle:
+                        shapes.Add(new Rect(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Triangle:
+                        shapes.Add(new TriangleRight(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Rhomb:
+                        shapes.Add(new Rhomb(e.X, e.Y, 0, 0));
+                        break;
+                }
+                
                 frames.Add(new Rectangle(e.X, e.Y, 0, 0));
                 isDrawing = true;
             }
@@ -238,6 +259,15 @@ namespace Painter
                 case "Circle":
                     activeButton = Button.Ellipse;
                     break;
+                case "Triangle":
+                    activeButton = Button.Triangle;
+                    break;
+                case "Rhomb":
+                    activeButton = Button.Rhomb;
+                    break;
+                case "Rectangle":
+                    activeButton = Button.Rectangle;
+                    break;
             }
         }
 
@@ -249,7 +279,7 @@ namespace Painter
                 MainForm_Paint(null, null);
             }
 
-            if (e.KeyCode == Keys.Escape && activeButton != Button.None)
+            else if (e.KeyCode == Keys.Escape && activeButton != Button.None)
             {
                 buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
                 activeButton = Button.None;
@@ -277,20 +307,24 @@ namespace Painter
                 center.X = shapeCenter.X <= e.X ? shapeCenter.X : e.X;
                 center.Y = shapeCenter.Y <= e.Y ? shapeCenter.Y : e.Y;
 
-                switch (activeButton)
-                {
-                    case Button.Ellipse:
-                        shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
-                        width = ((Ellipse)shapes[shapes.Count - 1]).width = Math.Abs(shapeCenter.X - e.X) / 2;
-                        height = ((Ellipse)shapes[shapes.Count - 1]).height = Math.Abs(shapeCenter.Y - e.Y) / 2;
-                        frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width * 2, height * 2);
-                        break;
-                    case Button.None:
-                        break;
-                    default:
-                        break;
-                }
+                //switch (activeButton)
+                //{
+                //    case Button.Ellipse:
+                //        shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
+                //        width = shapes[shapes.Count - 1].width = Math.Abs(shapeCenter.X - e.X);
+                //        height = shapes[shapes.Count - 1].height = Math.Abs(shapeCenter.Y - e.Y);
+                //        frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width, height);
+                //        break;
+                //    case Button.None:
+                //        break;
+                //    default:
+                //        break;
+                //}
 
+                shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
+                width = shapes[shapes.Count - 1].width = Math.Abs(shapeCenter.X - e.X);
+                height = shapes[shapes.Count - 1].height = Math.Abs(shapeCenter.Y - e.Y);
+                frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width, height);
                 MainForm_Paint(null, null);
             }
 
@@ -326,16 +360,11 @@ namespace Painter
                         break;
                 }
 
-                height = ((Ellipse)shapes[chosenElement]).height += delta.Y;
-                width = ((Ellipse)shapes[chosenElement]).width += delta.X;
+                height = shapes[chosenElement].height += 2 * delta.Y;
+                width = shapes[chosenElement].width += 2 * delta.X;
                 frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
-                    width * 2, height * 2);
+                    width, height);
                 MainForm_Paint(null, null);
-            }
-
-            else if (isDrawing)
-            {
-                
             }
 
             // условие при котором фигуру нужно перетаскивать
@@ -350,7 +379,6 @@ namespace Painter
             }
 
             else if (isChosen && IsOnRectacleBorder(e.X, e.Y) != FrameEdge.None) { }
-
 
             else Cursor = Cursors.Arrow;
         }

@@ -8,15 +8,13 @@ namespace Painter
 {
     class TriangleRight : Shape
     {
-        public int height;
-        public int width;
-
         public TriangleRight(int x, int y, int height, int width)
         {
             point = new System.Drawing.Point(x, y);
             this.height = height;
             this.width = width;
         }
+
         public override void Paint(System.Drawing.Graphics g)
         {
             g.DrawLine(pen, point.X, point.Y, point.X + width, point.Y + height);
@@ -26,12 +24,6 @@ namespace Painter
             fillPoint[0].X = point.X + 1; 
             fillPoint[0].Y = point.Y + height - 1;
             g.FillClosedCurve(brush, fillPoint);
-        }
-
-        public override bool isInside(int X, int Y)
-        {
-          
-            return false;
         }
     }
 }
