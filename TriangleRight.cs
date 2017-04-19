@@ -24,7 +24,7 @@ namespace Painter
             g.DrawLine(pen, point.X + height, point.Y, point.X + width, point.Y + height);
             System.Drawing.Point[] fillPoint = new System.Drawing.Point[1]; //точка заливки фигуры
             fillPoint[0].X = point.X + 1; 
-            fillPoint[0].Y = point.Y + 1;
+            fillPoint[0].Y = point.Y + height - 1;
             g.FillClosedCurve(brush, fillPoint);
         }
 
