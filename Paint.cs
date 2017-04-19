@@ -219,7 +219,10 @@ namespace Painter
                         shapes.Add(new Bezier(e.X, e.Y, 0, 0));
                         break;
                 }
-                
+
+                shapes[shapes.Count - 1].pen.Color = ColorLineLabel.BackColor;
+                shapes[shapes.Count - 1].pen.Width = Convert.ToInt32(LineWhigth1.GetItemText(this.LineWhigth1.SelectedItem));
+                ((SolidBrush)(shapes[shapes.Count - 1].brush)).Color = ColorBrashLabel.BackColor;
                 frames.Add(new Rectangle(e.X, e.Y, 0, 0));
                 isDrawing = true;
             }
@@ -316,21 +319,6 @@ namespace Painter
                 Point center = new Point();
                 center.X = shapeCenter.X <= e.X ? shapeCenter.X : e.X;
                 center.Y = shapeCenter.Y <= e.Y ? shapeCenter.Y : e.Y;
-
-                //switch (activeButton)
-                //{
-                //    case Button.Ellipse:
-                //        shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
-                //        width = shapes[shapes.Count - 1].width = Math.Abs(shapeCenter.X - e.X);
-                //        height = shapes[shapes.Count - 1].height = Math.Abs(shapeCenter.Y - e.Y);
-                //        frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width, height);
-                //        break;
-                //    case Button.None:
-                //        break;
-                //    default:
-                //        break;
-                //}
-
                 shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
                 width = shapes[shapes.Count - 1].width = Math.Abs(shapeCenter.X - e.X);
                 height = shapes[shapes.Count - 1].height = Math.Abs(shapeCenter.Y - e.Y);
@@ -435,6 +423,12 @@ namespace Painter
             colorDialog1.ShowDialog();
             ColorBrashLabel.BackColor = colorDialog1.Color;
             ColorBrashLabel.Tag = colorDialog1.Color;
+
+            if(isChosen)
+            {
+                ((SolidBrush)shapes[chosenElement].brush).Color = ColorBrashLabel.BackColor;
+                MainForm_Paint(null, null);
+            }
         }
 
         private void ColorLineLabel_Click(object sender, EventArgs e)
@@ -442,6 +436,12 @@ namespace Painter
             colorDialog1.ShowDialog();
             ColorLineLabel.BackColor = colorDialog1.Color;
             ColorLineLabel.Tag = colorDialog1.Color;
+            
+            if(isChosen)
+            {
+                shapes[shapes.Count - 1].pen.Color = ColorLineLabel.BackColor;
+                MainForm_Paint(null, null);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -450,7 +450,12 @@ namespace Painter
             string pathPict = "..\\..\\Line";
             pathPict += LineWhigth1.Tag + ".jpg";
             PicterLineWhigth.Image = Image.FromFile(pathPict);
-        }
 
+            if (isChosen)
+            {
+                shapes[chosenElement].pen.Width = Convert.ToInt32(LineWhigth1.GetItemText(this.LineWhigth1.SelectedItem));
+                MainForm_Paint(null, null);
+            }
+        }
     }
 }
