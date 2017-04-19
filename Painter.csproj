@@ -67,7 +67,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="Rhomb.cs" />
     <Compile Include="Shape.cs" />
+    <Compile Include="TriangleRight.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
