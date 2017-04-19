@@ -238,8 +238,8 @@ namespace Painter
                 {
                     case Button.Ellipse:
                         shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
-                        width = ((Ellipse)shapes[shapes.Count - 1]).radiusV = Math.Abs(shapeCenter.X - e.X) / 2;
-                        height = ((Ellipse)shapes[shapes.Count - 1]).radiusH = Math.Abs(shapeCenter.Y - e.Y) / 2;
+                        width = ((Ellipse)shapes[shapes.Count - 1]).width = Math.Abs(shapeCenter.X - e.X) / 2;
+                        height = ((Ellipse)shapes[shapes.Count - 1]).height = Math.Abs(shapeCenter.Y - e.Y) / 2;
                         frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width*2, height*2);
                         break;
                     case Button.None:
@@ -282,8 +282,8 @@ namespace Painter
                             break;
                     }
 
-                    height = ((Ellipse)shapes[chosenElement]).radiusH += delta.Y;
-                    width = ((Ellipse)shapes[chosenElement]).radiusV += delta.X;
+                    height = ((Ellipse)shapes[chosenElement]).height += delta.Y;
+                    width = ((Ellipse)shapes[chosenElement]).width += delta.X;
                     frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
                         width * 2, height * 2);
                     MainForm_Paint(null, null);
