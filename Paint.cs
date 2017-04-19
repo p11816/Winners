@@ -347,23 +347,29 @@ namespace Painter
 
         void seveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            string name = seveFileDialog.FileName;
+            string nameFile = seveFileDialog.FileName;                                  // полный путь к файлу
             try
             {
-                XDocument xdoc = new XDocument();
-                XElement homeElem = new XElement("svg");
-                //XAttribute width = new XAttribute("width", panel1.Size.Width);
-                //XAttribute height = new XAttribute("width", panel1.Size.Height);
-                //xdoc.Add(width);
-                //xdoc.Add(height);
+                XDocument xdoc = new XDocument();                                   // создаём документ
+                XElement homeElem = new XElement("svg");                            // создаём корневой элемент(тэг)
                 foreach(var it in shapes)
                 {
+                    string elemName = "";                                           // имя вложенного элемента
+                    List<XAttribute> att = new List<XAttribute>();                  // коллекция атрибутов вложенного элемента
                     if(it is Ellipse)
                     {
-                        Ellipse ellips = it as Ellipse;
-                        XElement elem = new XElement("ellipse");
+                        elemName = "ellipse";
+                        Ellipse ellipse = it as Ellipse;
+                        att.Add(new XAttribute("cx", ellipse.point.X));
+                        att.Add(new XAttribute("cy", ellipse.point.Y));
+                        att.Add(new XAttribute("rx", ellipse.width));
+                        att.Add(new XAttribute("ry", ellipse.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(ellipse.pen, ellipse.brush)));
                     }
+                    homeElem.Add(new XElement(elemName, att));                      // добавляем вложенный элемент в корневой
                 }
+                xdoc.Add(homeElem);                                                 // добавляем корневой элемент со всеми его вложенными элементами в документ
+                xdoc.Save(nameFile);                                                // сохраняем файл
             }
             catch (Exception ex)
             {
@@ -375,12 +381,13 @@ namespace Painter
             }
         }
 
-        private string getAttriburStyle1(Pen pen, Brush brush)
+        private string getAttriburStyle(Pen pen, Brush brush)
         {
             SolidBrush br = brush as SolidBrush;
             string s = "fill:rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
-            Color colorPen = pen.Color;
-            s = "fill:rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");"; return s;
+            s += "strocke-width:" + pen.Width + ";";
+            s += "stroke:rgb(" + pen.Color.R + "," + pen.Color.G + "," + pen.Color.B + ")";
+            return s;
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Открыть"
