@@ -189,7 +189,7 @@
             // 
             // ColorBrashLabel
             // 
-            this.ColorBrashLabel.BackColor = System.Drawing.Color.Black;
+            this.ColorBrashLabel.BackColor = System.Drawing.Color.White;
             this.ColorBrashLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ColorBrashLabel.Location = new System.Drawing.Point(587, 48);
             this.ColorBrashLabel.Name = "ColorBrashLabel";
@@ -222,7 +222,7 @@
             // 
             // ColorLineLabel
             // 
-            this.ColorLineLabel.BackColor = System.Drawing.Color.Red;
+            this.ColorLineLabel.BackColor = System.Drawing.Color.Black;
             this.ColorLineLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ColorLineLabel.Location = new System.Drawing.Point(470, 48);
             this.ColorLineLabel.Name = "ColorLineLabel";
