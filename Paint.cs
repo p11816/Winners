@@ -209,11 +209,6 @@ namespace Painter
             ColorLineLabel.Tag = colorDialog1.Color;
         }
         
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             LineWhigth1.Tag = Convert.ToInt32(LineWhigth1.Items[LineWhigth1.SelectedIndex]);
