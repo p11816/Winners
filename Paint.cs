@@ -359,12 +359,35 @@ namespace Painter
                     if(it is Ellipse)
                     {
                         elemName = "ellipse";
-                        Ellipse ellipse = it as Ellipse;
-                        att.Add(new XAttribute("cx", ellipse.point.X));
-                        att.Add(new XAttribute("cy", ellipse.point.Y));
-                        att.Add(new XAttribute("rx", ellipse.width));
-                        att.Add(new XAttribute("ry", ellipse.height));
-                        att.Add(new XAttribute("style", getAttriburStyle(ellipse.pen, ellipse.brush)));
+                        Ellipse elem = it as Ellipse;
+                        att.Add(new XAttribute("cx", elem.point.X));
+                        att.Add(new XAttribute("cy", elem.point.Y));
+                        att.Add(new XAttribute("rx", elem.width));
+                        att.Add(new XAttribute("ry", elem.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                    }
+                    else if (it is Rect)
+                    {
+                        elemName = "rect";
+                        Rect elem = it as Rect;
+                        att.Add(new XAttribute("x", elem.point.X));
+                        att.Add(new XAttribute("y", elem.point.Y));
+                        att.Add(new XAttribute("width", elem.width));
+                        att.Add(new XAttribute("height", elem.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                    }
+                    else if (it is Rhomb)
+                    {
+                        elemName = "rect";
+                        Rhomb elem = it as Rhomb;
+                        att.Add(new XAttribute("x", elem.point.X));
+                        att.Add(new XAttribute("y", elem.point.Y));
+                        att.Add(new XAttribute("width", elem.width));
+                        att.Add(new XAttribute("height", elem.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        int halfW = elem.point.X + elem.width / 2;                  // координата центра ромба по оси x
+                        int halfH = elem.point.X + elem.height / 2;                 // координата центра ромба по оси y
+                        att.Add(new XAttribute("transform", "rotate(" + 45 + " " + halfW + " " + halfH + ")"));         // поворот прямоугольника на 45 градусов относительно его центра, чтобы получить ромб
                     }
                     homeElem.Add(new XElement(elemName, att));                      // добавляем вложенный элемент в корневой
                 }
