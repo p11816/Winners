@@ -216,7 +216,7 @@ namespace Painter
             {
                 using (StreamWriter file = new StreamWriter(name))
                 {
-
+                    //if()
                 }
             }
             catch (Exception ex)
