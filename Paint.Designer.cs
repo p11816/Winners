@@ -49,6 +49,7 @@
             this.ColorLineLabel = new System.Windows.Forms.Label();
             this.LineWhigth1 = new System.Windows.Forms.ComboBox();
             this.PicterLineWhigth = new System.Windows.Forms.PictureBox();
+            this.Button5 = new System.Windows.Forms.Button();
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).BeginInit();
@@ -172,6 +173,7 @@
             // LeftPanel
             // 
             this.LeftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LeftPanel.Controls.Add(this.Button5);
             this.LeftPanel.Controls.Add(this.Button4);
             this.LeftPanel.Controls.Add(this.Button3);
             this.LeftPanel.Controls.Add(this.Button2);
@@ -256,6 +258,17 @@
             this.PicterLineWhigth.TabIndex = 7;
             this.PicterLineWhigth.TabStop = false;
             // 
+            // Button5
+            // 
+            this.Button5.Location = new System.Drawing.Point(2, 152);
+            this.Button5.Name = "Button5";
+            this.Button5.Size = new System.Drawing.Size(30, 30);
+            this.Button5.TabIndex = 4;
+            this.Button5.TabStop = false;
+            this.Button5.Tag = "Bezier";
+            this.Button5.UseVisualStyleBackColor = true;
+            this.Button5.Click += new System.EventHandler(this.ShapeButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,6 +327,7 @@
         private System.Windows.Forms.Label ColorLineLabel;
         private System.Windows.Forms.ComboBox LineWhigth1;
         private System.Windows.Forms.PictureBox PicterLineWhigth;
+        private System.Windows.Forms.Button Button5;
     }
 }
 

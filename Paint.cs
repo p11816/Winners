@@ -62,6 +62,7 @@ namespace Painter
             Rectangle,
             Triangle,
             Rhomb,
+            Bezier,
             None
         }
 
@@ -85,6 +86,7 @@ namespace Painter
             buttonsForShape.Add(Button2);
             buttonsForShape.Add(Button3);
             buttonsForShape.Add(Button4);
+            buttonsForShape.Add(Button5);
             LineWhigth1.Items.Add("3");
             LineWhigth1.Items.Add("5");
             LineWhigth1.Items.Add("7");
@@ -100,12 +102,14 @@ namespace Painter
             imgForButtons.Images.Add(Image.FromFile("../../rectangle.png"));
             imgForButtons.Images.Add(Image.FromFile("../../triangle.png"));
             imgForButtons.Images.Add(Image.FromFile("../../rhomb.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../bezier.png"));
             buttonsForShape[(int)(Button.Rhomb)].ImageList = buttonsForShape[(int)(Button.Triangle)].ImageList = buttonsForShape[(int)(Button.Rectangle)].ImageList
-                = buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
+                = buttonsForShape[(int)(Button.Ellipse)].ImageList = buttonsForShape[(int)(Button.Bezier)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
             buttonsForShape[(int)(Button.Rectangle)].ImageIndex = 1;
             buttonsForShape[(int)(Button.Triangle)].ImageIndex = 2;
             buttonsForShape[(int)(Button.Rhomb)].ImageIndex = 3;
+            buttonsForShape[(int)(Button.Bezier)].ImageIndex = 4;
             PicterLineWhigth.Image = Image.FromFile("..\\..\\Line3.jpg");
         }
 
@@ -211,6 +215,9 @@ namespace Painter
                     case Button.Rhomb:
                         shapes.Add(new Rhomb(e.X, e.Y, 0, 0));
                         break;
+                    case Button.Bezier:
+                        shapes.Add(new Bezier(e.X, e.Y, 0, 0));
+                        break;
                 }
                 
                 frames.Add(new Rectangle(e.X, e.Y, 0, 0));
@@ -267,6 +274,9 @@ namespace Painter
                     break;
                 case "Rectangle":
                     activeButton = Button.Rectangle;
+                    break;
+                case "Bezier":
+                    activeButton = Button.Bezier;
                     break;
             }
         }
