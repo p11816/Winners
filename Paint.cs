@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Painter
 {
@@ -116,6 +117,7 @@ namespace Painter
 
             // создаём холст - canvas
             Graphics g = this.CreateGraphics();
+            //Graphics g = panel1.CreateGraphics();
             g.Clear(SystemColors.Control); // задаем цвет заливки холста
 
             // рисуем все фигуры
@@ -338,7 +340,7 @@ namespace Painter
         }
 
 
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Сохранить"
         {
             seveFileDialog.ShowDialog();
         }
@@ -348,9 +350,19 @@ namespace Painter
             string name = seveFileDialog.FileName;
             try
             {
-                using (StreamWriter file = new StreamWriter(name))
+                XDocument xdoc = new XDocument();
+                XElement homeElem = new XElement("svg");
+                //XAttribute width = new XAttribute("width", panel1.Size.Width);
+                //XAttribute height = new XAttribute("width", panel1.Size.Height);
+                //xdoc.Add(width);
+                //xdoc.Add(height);
+                foreach(var it in shapes)
                 {
-                    //if()
+                    if(it is Ellipse)
+                    {
+                        Ellipse ellips = it as Ellipse;
+                        XElement elem = new XElement("ellipse");
+                    }
                 }
             }
             catch (Exception ex)
@@ -363,7 +375,15 @@ namespace Painter
             }
         }
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private string getAttriburStyle1(Pen pen, Brush brush)
+        {
+            SolidBrush br = brush as SolidBrush;
+            string s = "fill:rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
+            Color colorPen = pen.Color;
+            s = "fill:rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");"; return s;
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Открыть"
         {
             openFileDialog.ShowDialog();
         }
