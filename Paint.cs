@@ -23,6 +23,7 @@ namespace Painter
         private Point shapeCenter;
         private bool isDrawing = false;
         private bool isChosen = false;
+        
 
         private enum Button
         {
@@ -58,6 +59,7 @@ namespace Painter
             imgForButtons.Images.Add(Image.FromFile("../../circle.png"));
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
+            PicterLineWhigth.Image = Image.FromFile("..\\..\\Line3.jpg");
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -174,6 +176,7 @@ namespace Painter
             }
         }
 
+       
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Left && isChosen && shapes[chosenElement].isInside(e.X, e.Y))
@@ -198,6 +201,13 @@ namespace Painter
             colorDialog1.ShowDialog();
             ColorLineLabel.BackColor = colorDialog1.Color;
             ColorLineLabel.Tag = colorDialog1.Color;
+        }
+        
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            string pathPict = "..\\..\\Line";
+            pathPict += numericUpDown1.Value + ".jpg";
+            PicterLineWhigth.Image = Image.FromFile(pathPict);
         }
     }
 }

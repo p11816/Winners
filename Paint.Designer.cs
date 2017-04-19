@@ -41,7 +41,7 @@
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.WhigthLine = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PicterLineWhigth = new System.Windows.Forms.PictureBox();
             this.ColorBrashLabel = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.ColorBrash = new System.Windows.Forms.TextBox();
@@ -50,7 +50,7 @@
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).BeginInit();
             this.SuspendLayout();
             // 
             // HelpToolStripMenuItem
@@ -174,7 +174,7 @@
             0});
             this.numericUpDown1.Location = new System.Drawing.Point(165, 42);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            15,
+            11,
             0,
             0,
             0});
@@ -191,6 +191,7 @@
             0,
             0,
             0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // WhigthLine
             // 
@@ -204,19 +205,22 @@
             this.WhigthLine.TabIndex = 6;
             this.WhigthLine.Text = "Ширина линии";
             // 
-            // pictureBox1
+            // PicterLineWhigth
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(233, 42);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(134, 20);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
+            this.PicterLineWhigth.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PicterLineWhigth.Location = new System.Drawing.Point(235, 42);
+            this.PicterLineWhigth.Name = "PicterLineWhigth";
+            this.PicterLineWhigth.Size = new System.Drawing.Size(163, 28);
+            this.PicterLineWhigth.TabIndex = 7;
+            this.PicterLineWhigth.TabStop = false;
             // 
             // ColorBrashLabel
             // 
             this.ColorBrashLabel.BackColor = System.Drawing.Color.Black;
             this.ColorBrashLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ColorBrashLabel.Location = new System.Drawing.Point(536, 48);
+            this.ColorBrashLabel.Location = new System.Drawing.Point(587, 48);
             this.ColorBrashLabel.Name = "ColorBrashLabel";
             this.ColorBrashLabel.Size = new System.Drawing.Size(36, 32);
             this.ColorBrashLabel.TabIndex = 8;
@@ -227,7 +231,7 @@
             // 
             this.ColorBrash.BackColor = System.Drawing.SystemColors.Control;
             this.ColorBrash.Enabled = false;
-            this.ColorBrash.Location = new System.Drawing.Point(516, 25);
+            this.ColorBrash.Location = new System.Drawing.Point(567, 25);
             this.ColorBrash.Name = "ColorBrash";
             this.ColorBrash.ReadOnly = true;
             this.ColorBrash.Size = new System.Drawing.Size(80, 20);
@@ -238,7 +242,7 @@
             // 
             this.ColorLine.BackColor = System.Drawing.SystemColors.Control;
             this.ColorLine.Enabled = false;
-            this.ColorLine.Location = new System.Drawing.Point(403, 25);
+            this.ColorLine.Location = new System.Drawing.Point(454, 25);
             this.ColorLine.Name = "ColorLine";
             this.ColorLine.ReadOnly = true;
             this.ColorLine.Size = new System.Drawing.Size(70, 20);
@@ -249,7 +253,7 @@
             // 
             this.ColorLineLabel.BackColor = System.Drawing.Color.Red;
             this.ColorLineLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ColorLineLabel.Location = new System.Drawing.Point(419, 48);
+            this.ColorLineLabel.Location = new System.Drawing.Point(470, 48);
             this.ColorLineLabel.Name = "ColorLineLabel";
             this.ColorLineLabel.Size = new System.Drawing.Size(36, 32);
             this.ColorLineLabel.TabIndex = 11;
@@ -265,7 +269,7 @@
             this.Controls.Add(this.ColorLine);
             this.Controls.Add(this.ColorBrash);
             this.Controls.Add(this.ColorBrashLabel);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.PicterLineWhigth);
             this.Controls.Add(this.WhigthLine);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.LeftPanel);
@@ -285,7 +289,7 @@
             this.MenuStrip.PerformLayout();
             this.LeftPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,7 +310,7 @@
         private System.Windows.Forms.Panel LeftPanel;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.TextBox WhigthLine;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox PicterLineWhigth;
         private System.Windows.Forms.Label ColorBrashLabel;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.TextBox ColorBrash;
