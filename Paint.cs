@@ -27,7 +27,10 @@ namespace Painter
         private bool isChosen = false; // выделен элемент
         private bool isResizing = false; // растягивание фигуры
         private FrameEdge edge = FrameEdge.None;
-        private Graphics graphics; 
+        private Graphics graphics;
+        private bool isZooming = false;
+        private bool isDecreasing = false;
+        private float coefficient = 1.0f;
 
         private enum FrameEdge
         {
@@ -140,6 +143,18 @@ namespace Painter
             buffer = currentContext.Allocate(this.CreateGraphics(),
                this.DisplayRectangle);
             buffer.Graphics.Clear(SystemColors.Control);
+
+
+            if(isZooming || isDecreasing)
+            {
+                if (isZooming) coefficient += coefficient == 3.0f ? 0f : 0.2f;
+                else coefficient -= coefficient == -3.0f ? 0f : 0.2f;
+
+                buffer.Graphics.ScaleTransform(coefficient, coefficient, System.Drawing.Drawing2D.MatrixOrder.Append);  // then scale
+                isZooming = false;
+                isDecreasing = false;
+            }
+            
             
             // рисуем все фигуры
             foreach (Shape s in this.shapes) { s.Paint(buffer.Graphics); }
@@ -289,7 +304,20 @@ namespace Painter
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape && activeButton == Button.None)
+            if (ModifierKeys == Keys.Control && e.KeyCode == Keys.Add)
+            {
+                isZooming = true;
+                MainForm_Paint(null, null);
+            }
+
+            else if (ModifierKeys == Keys.Control && e.KeyCode == Keys.Subtract)
+            {
+                isDecreasing = true;
+                MainForm_Paint(null, null);
+            }
+
+
+            else if (e.KeyCode == Keys.Escape && activeButton == Button.None)
             {
                 isChosen = false;
                 MainForm_Paint(null, null);
@@ -460,7 +488,7 @@ namespace Painter
             
             if(isChosen)
             {
-                shapes[shapes.Count - 1].pen.Color = ColorLineLabel.BackColor;
+                shapes[chosenElement].pen.Color = ColorLineLabel.BackColor;
                 MainForm_Paint(null, null);
             }
         }
