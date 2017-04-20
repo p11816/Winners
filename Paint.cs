@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Painter
 {
@@ -27,7 +28,7 @@ namespace Painter
         private bool isChosen = false; // выделен элемент
         private bool isResizing = false; // растягивание фигуры
         private FrameEdge edge = FrameEdge.None;
-        private Graphics graphics;
+        private Graphics graphics; 
         private bool isZooming = false;
         private bool isDecreasing = false;
         private float coefficient = 1.0f;
@@ -143,7 +144,7 @@ namespace Painter
             buffer = currentContext.Allocate(this.CreateGraphics(),
                this.DisplayRectangle);
             buffer.Graphics.Clear(SystemColors.Control);
-
+            
 
             if(isZooming || isDecreasing)
             {
@@ -431,20 +432,76 @@ namespace Painter
         }
 
 
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Сохранить"
         {
             seveFileDialog.ShowDialog();
         }
 
         void seveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            string name = seveFileDialog.FileName;
+            string nameFile = seveFileDialog.FileName;                                  // полный путь к файлу
             try
             {
-                using (StreamWriter file = new StreamWriter(name))
+                XDocument xdoc = new XDocument();                                   // создаём документ
+                XElement homeElem = new XElement("svg");                            // создаём корневой элемент(тэг)
+                foreach(var it in shapes)
                 {
-                    //if()
+                    string elemName = "";                                           // имя вложенного элемента
+                    List<XAttribute> att = new List<XAttribute>();                  // коллекция атрибутов вложенного элемента
+                    if(it is Ellipse)
+                    {
+                        elemName = "ellipse";
+                        Ellipse elem = it as Ellipse;
+                        att.Add(new XAttribute("cx", elem.point.X));
+                        att.Add(new XAttribute("cy", elem.point.Y));
+                        att.Add(new XAttribute("rx", elem.width));
+                        att.Add(new XAttribute("ry", elem.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                    }
+                    else if (it is Rect)
+                    {
+                        elemName = "rect";
+                        Rect elem = it as Rect;
+                        att.Add(new XAttribute("x", elem.point.X));
+                        att.Add(new XAttribute("y", elem.point.Y));
+                        att.Add(new XAttribute("width", elem.width));
+                        att.Add(new XAttribute("height", elem.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                    }
+                    else if (it is Rhomb)
+                    {
+                        elemName = "rect";
+                        Rhomb elem = it as Rhomb;
+                        att.Add(new XAttribute("x", elem.point.X));
+                        att.Add(new XAttribute("y", elem.point.Y));
+                        att.Add(new XAttribute("width", elem.width));
+                        att.Add(new XAttribute("height", elem.height));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        int halfW = elem.point.X + elem.width / 2;                  // координата центра ромба по оси x
+                        int halfH = elem.point.X + elem.height / 2;                 // координата центра ромба по оси y
+                        att.Add(new XAttribute("transform", "rotate(" + 45 + " " + halfW + " " + halfH + ")"));         // поворот прямоугольника на 45 градусов относительно его центра, чтобы получить ромб
+                    }
+                    else if (it is TriangleRight) 
+                    {
+                        elemName = "path";
+                        TriangleRight elem = it as TriangleRight;
+                        att.Add(new XAttribute("x", elem.point.X));
+                        att.Add(new XAttribute("y", elem.point.Y));
+                        att.Add(new XAttribute("width", elem.width));
+                        att.Add(new XAttribute("height", elem.height));
+                           string attributeValue = "M";
+                        for (int i = 0; i < elem.apexTriangle.Length; ++i)
+                {
+                            attributeValue += elem.apexTriangle[i].X + "," + elem.apexTriangle[i].Y + " ";
+                        }
+                        attributeValue += "Z";
+                        att.Add(new XAttribute("d", attributeValue));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                    }
+                    homeElem.Add(new XElement(elemName, att));                      // добавляем вложенный элемент в корневой
                 }
+                xdoc.Add(homeElem);                                                 // добавляем корневой элемент со всеми его вложенными элементами в документ
+                xdoc.Save(nameFile);                                                // сохраняем файл
             }
             catch (Exception ex)
             {
@@ -456,7 +513,16 @@ namespace Painter
             }
         }
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private string getAttriburStyle(Pen pen, Brush brush)
+        {
+            SolidBrush br = brush as SolidBrush;
+            string s = "fill:rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
+            s += "strocke-width:" + pen.Width + ";";
+            s += "stroke:rgb(" + pen.Color.R + "," + pen.Color.G + "," + pen.Color.B + ")";
+            return s;
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Открыть"
         {
             openFileDialog.ShowDialog();
         }
