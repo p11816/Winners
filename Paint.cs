@@ -414,6 +414,7 @@ namespace Painter
                 {
                     string elemName = "";                                           // имя вложенного элемента
                     List<XAttribute> att = new List<XAttribute>();                  // коллекция атрибутов вложенного элемента
+                   
                     if(it is Ellipse)
                     {
                         elemName = "ellipse";
@@ -424,45 +425,59 @@ namespace Painter
                         att.Add(new XAttribute("ry", elem.height));
                         att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                     }
-                    else if (it is Rect)
+                    else
                     {
-                        elemName = "rect";
-                        Rect elem = it as Rect;
-                        att.Add(new XAttribute("x", elem.point.X));
-                        att.Add(new XAttribute("y", elem.point.Y));
-                        att.Add(new XAttribute("width", elem.width));
-                        att.Add(new XAttribute("height", elem.height));
-                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
-                    }
-                    else if (it is Rhomb)
-                    {
-                        elemName = "rect";
-                        Rhomb elem = it as Rhomb;
-                        att.Add(new XAttribute("x", elem.point.X));
-                        att.Add(new XAttribute("y", elem.point.Y));
-                        att.Add(new XAttribute("width", elem.width));
-                        att.Add(new XAttribute("height", elem.height));
-                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
-                        int halfW = elem.point.X + elem.width / 2;                  // координата центра ромба по оси x
-                        int halfH = elem.point.X + elem.height / 2;                 // координата центра ромба по оси y
-                        att.Add(new XAttribute("transform", "rotate(" + 45 + " " + halfW + " " + halfH + ")"));         // поворот прямоугольника на 45 градусов относительно его центра, чтобы получить ромб
-                    }
-                    else if (it is TriangleRight) 
-                    {
-                        elemName = "path";
-                        TriangleRight elem = it as TriangleRight;
-                        att.Add(new XAttribute("x", elem.point.X));
-                        att.Add(new XAttribute("y", elem.point.Y));
-                        att.Add(new XAttribute("width", elem.width));
-                        att.Add(new XAttribute("height", elem.height));
-                           string attributeValue = "M";
-                        for (int i = 0; i < elem.apexTriangle.Length; ++i)
+                        att.Add(new XAttribute("x", it.point.X));
+                        att.Add(new XAttribute("y", it.point.Y));
+                        att.Add(new XAttribute("width", it.width));
+                        att.Add(new XAttribute("height", it.height));
+                        if (it is Rect)
                         {
-                            attributeValue += elem.apexTriangle[i].X + "," + elem.apexTriangle[i].Y + " ";
+                            elemName = "rect";
+                            Rect elem = it as Rect;
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                         }
-                        attributeValue += "Z";
-                        att.Add(new XAttribute("d", attributeValue));
-                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        else if (it is Rhomb)
+                        {
+                            elemName = "rect";
+                            Rhomb elem = it as Rhomb;
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " c";
+                            for (int i = 1; i < elem.vertex.Length; ++i)
+                            {
+                                attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
+                            }
+                            attributeValue += "Z";
+                            att.Add(new XAttribute("d", attributeValue));
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        }
+                        else if (it is TriangleRight)
+                        {
+                            elemName = "path";
+                            TriangleRight elem = it as TriangleRight;
+
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " c";
+                            for (int i = 1; i < elem.vertex.Length; ++i)
+                            {
+                                attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
+                            }
+                            attributeValue += "Z";
+                            att.Add(new XAttribute("d", attributeValue));
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        }
+                        else if (it is Bezier)
+                        {
+                            elemName = "path";
+                            Bezier elem = it as Bezier;
+
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " q";
+                            for (int i = 1; i < elem.vertex.Length; ++i)
+                            {
+                                attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
+                            }
+                            attributeValue += "Z";
+                            att.Add(new XAttribute("d", attributeValue));
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, new SolidBrush(Color.FromArgb(0,0,0,0)))));
+                        }
                     }
                     homeElem.Add(new XElement(elemName, att));                      // добавляем вложенный элемент в корневой
                 }
@@ -482,7 +497,16 @@ namespace Painter
         private string getAttriburStyle(Pen pen, Brush brush)
         {
             SolidBrush br = brush as SolidBrush;
-            string s = "fill:rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
+            string s = "fill:";
+            s += br.Color.A == 0 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");") : ("none);");
+            //if(br.Color.A == 0)
+            //{
+            //    s += br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
+            //}
+            //else
+            //{
+            //    s += "none);";
+            //}
             s += "strocke-width:" + pen.Width + ";";
             s += "stroke:rgb(" + pen.Color.R + "," + pen.Color.G + "," + pen.Color.B + ")";
             return s;
