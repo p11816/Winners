@@ -441,7 +441,7 @@ namespace Painter
                         {
                             elemName = "rect";
                             Rhomb elem = it as Rhomb;
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " c";
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " l";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
@@ -455,7 +455,7 @@ namespace Painter
                             elemName = "path";
                             TriangleRight elem = it as TriangleRight;
 
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " c";
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " l";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
@@ -498,7 +498,7 @@ namespace Painter
         {
             SolidBrush br = brush as SolidBrush;
             string s = "fill:";
-            s += br.Color.A == 0 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");") : ("none);");
+            s += br.Color.A == 0 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ";") : ("none;");
             //if(br.Color.A == 0)
             //{
             //    s += br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
