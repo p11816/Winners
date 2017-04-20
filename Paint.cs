@@ -28,6 +28,7 @@ namespace Painter
         private bool isChosen = false; // выделен элемент
         private bool isResizing = false; // растягивание фигуры
         private FrameEdge edge = FrameEdge.None;
+        private Graphics graphics; 
 
         private enum FrameEdge
         {
@@ -74,7 +75,8 @@ namespace Painter
 
             InitializeSaveFileDialog();
             InitializeOpenFileDialog();
-
+            graphics = this.CreateGraphics();
+            graphics.Clear(SystemColors.Control);
         }
 
         private void InitializeButtonsForShape()
@@ -116,14 +118,21 @@ namespace Painter
             // game engines: ioquake, unity, SDL...
 
             // создаём холст - canvas
-            Graphics g = this.CreateGraphics();
-            //Graphics g = panel1.CreateGraphics();
-            g.Clear(SystemColors.Control); // задаем цвет заливки холста
+
+            BufferedGraphicsContext currentContext;
+            BufferedGraphics buffer;
+            // Gets a reference to the current BufferedGraphicsContext
+            currentContext = BufferedGraphicsManager.Current;
+            // Creates a BufferedGraphics instance associated with Form1, and with 
+            // dimensions the same size as the drawing surface of Form1.
+            buffer = currentContext.Allocate(this.CreateGraphics(),
+               this.DisplayRectangle);
+            buffer.Graphics.Clear(SystemColors.Control);
 
             // рисуем все фигуры
             foreach (Shape s in this.shapes)
             {
-                s.Paint(g);
+                s.Paint(buffer.Graphics);
             }
 
             if (isChosen)
@@ -131,9 +140,12 @@ namespace Painter
                 Pen pen = new Pen(Color.Black);
                 pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
                 pen.Width = 5;
-                g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.White)), frames[chosenElement]);
-                g.DrawRectangle(pen, frames[chosenElement]);
+                buffer.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.White)), frames[chosenElement]);
+                buffer.Graphics.DrawRectangle(pen, frames[chosenElement]);
             }
+
+            // Renders the contents of the buffer to the specified drawing surface.
+            buffer.Render(graphics);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -322,6 +334,11 @@ namespace Painter
                 MainForm_Paint(null, null);
             }
 
+            else if (isDrawing)
+            {
+                
+            }
+
             // условие при котором фигуру нужно перетаскивать
             else if (e.Button == MouseButtons.Left && isChosen && frames[chosenElement].Contains(new Point(e.X, e.Y)))
             {
@@ -377,7 +394,7 @@ namespace Painter
                         att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                     }
                     else if (it is Rhomb)
-                    {
+                {
                         elemName = "rect";
                         Rhomb elem = it as Rhomb;
                         att.Add(new XAttribute("x", elem.point.X));
