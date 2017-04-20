@@ -419,10 +419,10 @@ namespace Painter
                     {
                         elemName = "ellipse";
                         Ellipse elem = it as Ellipse;
-                        att.Add(new XAttribute("cx", elem.point.X));
-                        att.Add(new XAttribute("cy", elem.point.Y));
-                        att.Add(new XAttribute("rx", elem.width));
-                        att.Add(new XAttribute("ry", elem.height));
+                        att.Add(new XAttribute("cx", elem.point.X + elem.width / 2));
+                        att.Add(new XAttribute("cy", elem.point.Y + elem.height / 2));
+                        att.Add(new XAttribute("rx", elem.width / 2));
+                        att.Add(new XAttribute("ry", elem.height / 2));
                         att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                     }
                     else
@@ -441,10 +441,10 @@ namespace Painter
                         {
                             elemName = "path";
                             Rhomb elem = it as Rhomb;
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " l";
+                            string attributeValue = "M";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
-                                attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
+                                attributeValue += (elem.point.X + elem.vertex[i].X) + "," + (elem.point.Y + elem.vertex[i].Y) + " ";
                             }
                             attributeValue += "Z";
                             att.Add(new XAttribute("d", attributeValue));
@@ -498,15 +498,8 @@ namespace Painter
         {
             SolidBrush br = brush as SolidBrush;
             string s = "fill:";
-            s += br.Color.A == 1 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ";") : ("none;");
-            //if(br.Color.A == 0)
-            //{
-            //    s += br.Color.R + "," + br.Color.G + "," + br.Color.B + ");";
-            //}
-            //else
-            //{
-            //    s += "none);";
-            //}
+            s += (br.Color.A == 1 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ";") : ("none;"));
+            
             s += "strocke-width:" + pen.Width + ";";
             s += "stroke:rgb(" + pen.Color.R + "," + pen.Color.G + "," + pen.Color.B + ")";
             return s;
@@ -519,7 +512,6 @@ namespace Painter
         void openFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             var file = openFileDialog.OpenFile();
-            //throw new NotImplementedException();
         }
 
 
