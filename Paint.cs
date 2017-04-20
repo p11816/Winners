@@ -286,12 +286,11 @@ namespace Painter
       
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Location.X >=36 && e.Location.Y >= 90)
+            if (e.Location.X >= 36 && e.Location.Y >= 90)
             {
-                textBox1.Text = Convert.ToString(e.Location.X-36);
-                textBox2.Text = Convert.ToString(e.Location.Y-90);
+                label1.Text = Convert.ToString(e.Location.X - 36);
+                label2.Text = Convert.ToString(e.Location.Y - 90);
             }
-          
 
             if (isResizing && e.Button == MouseButtons.Left)
             {
@@ -409,8 +408,8 @@ namespace Painter
 
         private void MainForm_MouseLeave(object sender, EventArgs e)
         {
-            textBox1.Clear();
-            textBox2.Clear();
+            label1.Text = "";
+            label2.Text = "";
         }
 
         private void MainForm_Load(object sender, EventArgs e)
