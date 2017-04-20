@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace Painter
 {
-    class Rect : Shape
+    class Bezier : Shape
     {
-        public Rect(int x, int y, int height, int width)
+        public Bezier(int x, int y, int height, int width)
         {
             point = new System.Drawing.Point(x, y);
             this.height = height;
@@ -17,8 +18,9 @@ namespace Painter
 
         public override void Paint(System.Drawing.Graphics g)
         {
-            g.FillRectangle(brush, point.X, point.Y, width, height);
-            g.DrawRectangle(pen, point.X, point.Y, width, height);
+            Point[] p = new Point[] { point, new Point(point.X + width, point.Y), new Point(point.X, point.Y + height),
+                new Point(point.X + width, point.Y + height) };
+            g.DrawBezier(pen, p[0], p[1], p[2], p[3]);
         }
     }
 }
