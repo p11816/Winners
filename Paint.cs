@@ -439,7 +439,7 @@ namespace Painter
                         }
                         else if (it is Rhomb)
                         {
-                            elemName = "rect";
+                            elemName = "path";
                             Rhomb elem = it as Rhomb;
                             string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " l";
                             for (int i = 1; i < elem.vertex.Length; ++i)

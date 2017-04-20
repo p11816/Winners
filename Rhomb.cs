@@ -34,6 +34,7 @@ namespace Painter
 
         public override void Paint(System.Drawing.Graphics g)
         {
+            getVertex();
             Point[] p = new Point[4];
             for (int i = 0; i < p.Length; ++i)
             {
