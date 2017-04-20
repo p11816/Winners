@@ -33,7 +33,8 @@ namespace Painter
         }
         public override void Paint(System.Drawing.Graphics g)
         {
-            Point[] p = new Point[4];
+            getVertex();
+            Point[] p = new Point[3];
             for (int i = 0; i < p.Length; ++i)
             {
                 p[i] = new Point(point.X + vertex[i].X, point.Y + vertex[i].Y);
