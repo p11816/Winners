@@ -394,7 +394,7 @@ namespace Painter
                         att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                     }
                     else if (it is Rhomb)
-                {
+                    {
                         elemName = "rect";
                         Rhomb elem = it as Rhomb;
                         att.Add(new XAttribute("x", elem.point.X));
@@ -405,6 +405,23 @@ namespace Painter
                         int halfW = elem.point.X + elem.width / 2;                  // координата центра ромба по оси x
                         int halfH = elem.point.X + elem.height / 2;                 // координата центра ромба по оси y
                         att.Add(new XAttribute("transform", "rotate(" + 45 + " " + halfW + " " + halfH + ")"));         // поворот прямоугольника на 45 градусов относительно его центра, чтобы получить ромб
+                    }
+                    else if (it is TriangleRight) 
+                    {
+                        elemName = "path";
+                        TriangleRight elem = it as TriangleRight;
+                        att.Add(new XAttribute("x", elem.point.X));
+                        att.Add(new XAttribute("y", elem.point.Y));
+                        att.Add(new XAttribute("width", elem.width));
+                        att.Add(new XAttribute("height", elem.height));
+                           string attributeValue = "M";
+                        for (int i = 0; i < elem.apexTriangle.Length; ++i)
+                        {
+                            attributeValue += elem.apexTriangle[i].X + "," + elem.apexTriangle[i].Y + " ";
+                        }
+                        attributeValue += "Z";
+                        att.Add(new XAttribute("d", attributeValue));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                     }
                     homeElem.Add(new XElement(elemName, att));                      // добавляем вложенный элемент в корневой
                 }
