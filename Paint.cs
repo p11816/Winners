@@ -400,7 +400,7 @@ namespace Painter
 
         private void button6_MouseClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("Разработчики: \n\nЗайцев Владимир \nШибалович Иван \nВысоких Дмитрий \nАладьин Андрей");
+            MessageBox.Show("Temlead: \nЗайцев Владимир \n\nProgers: \nШибалович Иван \nВысоких Дмитрий \nАладьин Андрей");
         }
 
     }
