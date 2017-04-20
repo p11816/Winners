@@ -413,5 +413,10 @@ namespace Painter
             textBox2.Clear();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
