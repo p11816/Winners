@@ -439,29 +439,27 @@ namespace Painter
                         }
                         else if (it is Rhomb)
                         {
-                            elemName = "path";
+                            elemName = "polygon";
                             Rhomb elem = it as Rhomb;
-                            string attributeValue = "M";
-                            for (int i = 1; i < elem.vertex.Length; ++i)
+                            string attributeValue = "";
+                            for (int i = 0; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += (elem.point.X + elem.vertex[i].X) + "," + (elem.point.Y + elem.vertex[i].Y) + " ";
                             }
-                            attributeValue += "Z";
-                            att.Add(new XAttribute("d", attributeValue));
+                            att.Add(new XAttribute("points", attributeValue));
                             att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                         }
                         else if (it is TriangleRight)
                         {
-                            elemName = "path";
+                            elemName = "polygon";
                             TriangleRight elem = it as TriangleRight;
 
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " l";
-                            for (int i = 1; i < elem.vertex.Length; ++i)
+                            string attributeValue = "";
+                            for (int i = 0; i < elem.vertex.Length; ++i)
                             {
-                                attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
+                                attributeValue += (elem.point.X + elem.vertex[i].X) + "," + (elem.point.Y + elem.vertex[i].Y) + " ";
                             }
-                            attributeValue += "Z";
-                            att.Add(new XAttribute("d", attributeValue));
+                            att.Add(new XAttribute("points", attributeValue));
                             att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
                         }
                         else if (it is Bezier)
@@ -469,12 +467,11 @@ namespace Painter
                             elemName = "path";
                             Bezier elem = it as Bezier;
 
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " c";
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " c";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
                             }
-                            attributeValue += "Z";
                             att.Add(new XAttribute("d", attributeValue));
                             att.Add(new XAttribute("style", getAttriburStyle(elem.pen, new SolidBrush(Color.FromArgb(0,0,0,0)))));
                         }
