@@ -283,12 +283,16 @@ namespace Painter
 
             else if (isResizing) isResizing = false;
         }
-
-       
+      
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
-            textBox1.Text = Convert.ToString(Cursor.Position.X - 36);
-            textBox2.Text = Convert.ToString(Cursor.Position.Y - 113);
+            if (e.Location.X >=36 && e.Location.Y >= 90)
+            {
+                textBox1.Text = Convert.ToString(e.Location.X-36);
+                textBox2.Text = Convert.ToString(e.Location.Y-90);
+            }
+          
+
             if (isResizing && e.Button == MouseButtons.Left)
             {
                
@@ -401,6 +405,12 @@ namespace Painter
         private void button6_MouseClick(object sender, MouseEventArgs e)
         {
             MessageBox.Show("Temlead: \nЗайцев Владимир \n\nProgers: \nШибалович Иван \nВысоких Дмитрий \nАладьин Андрей");
+        }
+
+        private void MainForm_MouseLeave(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox2.Clear();
         }
 
     }
