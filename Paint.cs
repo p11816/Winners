@@ -441,7 +441,7 @@ namespace Painter
                         {
                             elemName = "rect";
                             Rhomb elem = it as Rhomb;
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " l";
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " l";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
@@ -455,7 +455,7 @@ namespace Painter
                             elemName = "path";
                             TriangleRight elem = it as TriangleRight;
 
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " l";
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " l";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
