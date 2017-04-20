@@ -287,6 +287,8 @@ namespace Painter
        
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
+            textBox1.Text = Convert.ToString(Cursor.Position.X - 36);
+            textBox2.Text = Convert.ToString(Cursor.Position.Y - 113);
             if (isResizing && e.Button == MouseButtons.Left)
             {
                
@@ -394,6 +396,11 @@ namespace Painter
             string pathPict = "..\\..\\Line";
             pathPict += LineWhigth1.Tag + ".jpg";
             PicterLineWhigth.Image = Image.FromFile(pathPict);
+        }
+
+        private void button6_MouseClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("Разработчики: \n\nЗайцев Владимир \nШибалович Иван \nВысоких Дмитрий \nАладьин Андрей");
         }
 
     }
