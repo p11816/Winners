@@ -469,7 +469,7 @@ namespace Painter
                             elemName = "path";
                             Bezier elem = it as Bezier;
 
-                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " q";
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.X + elem.vertex[0].X) + " c";
                             for (int i = 1; i < elem.vertex.Length; ++i)
                             {
                                 attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
