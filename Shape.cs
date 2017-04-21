@@ -13,6 +13,9 @@ namespace Painter
 
         static private int lastId = 0;
 
+        public int width;
+        public int height;
+
         //расстояние между двумя точками
         public static float Distance(Point a, Point b)
         {
@@ -34,11 +37,5 @@ namespace Painter
         public Pen pen;
         // заливка
         public Brush brush;
-
-        //попал ли курсор внутрь
-        public abstract bool isInside(int p1, int p2);
-
-        // попал ли курсор на границу
-        //public abstract bool isOnTheBorder(int x, int y); 
     }
 }

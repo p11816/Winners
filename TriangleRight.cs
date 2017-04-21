@@ -3,35 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Painter
 {
     class TriangleRight : Shape
     {
-        public int height;
-        public int width;
+       
+        public Point[] vertex;                            // массив относительных координат вершин
 
         public TriangleRight(int x, int y, int height, int width)
         {
             point = new System.Drawing.Point(x, y);
             this.height = height;
             this.width = width;
+            vertex = new Point[3];
+            getVertex();
+        }
+
+        private void getVertex()
+        {
+            vertex[0].X = width / 2;
+            vertex[0].Y = 0;
+            vertex[1].X = 0;
+            vertex[1].Y = height;
+            vertex[2].X = width;
+            vertex[2].Y = height;
+
         }
         public override void Paint(System.Drawing.Graphics g)
         {
-            g.DrawLine(pen, point.X, point.Y, point.X + width, point.Y + height);
-            g.DrawLine(pen, point.X, point.Y, point.X, point.Y + height);
-            g.DrawLine(pen, point.X + height, point.Y, point.X + width, point.Y + height);
-            System.Drawing.Point[] fillPoint = new System.Drawing.Point[1]; //точка заливки фигуры
-            fillPoint[0].X = point.X + 1; 
-            fillPoint[0].Y = point.Y + height - 1;
-            g.FillClosedCurve(brush, fillPoint);
-        }
-
-        public override bool isInside(int X, int Y)
-        {
-          
-            return false;
+            getVertex();
+            Point[] p = new Point[3];
+            for (int i = 0; i < p.Length; ++i)
+            {
+                p[i] = new Point(point.X + vertex[i].X, point.Y + vertex[i].Y);
+            }      
+            g.FillPolygon(brush, p);
+            g.DrawPolygon(pen, p);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Painter
 {
@@ -27,6 +28,10 @@ namespace Painter
         private bool isChosen = false; // выделен элемент
         private bool isResizing = false; // растягивание фигуры
         private FrameEdge edge = FrameEdge.None;
+        private Graphics graphics; 
+        private bool isZooming = false;
+        private bool isDecreasing = false;
+        private float coefficient = 1.0f;
 
         private enum FrameEdge
         {
@@ -58,6 +63,10 @@ namespace Painter
         private enum Button
         {
             Ellipse,
+            Rectangle,
+            Triangle,
+            Rhomb,
+            Bezier,
             None
         }
 
@@ -69,11 +78,10 @@ namespace Painter
             WindowState = FormWindowState.Maximized;
             buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
-            buttonColor = Button5.BackColor;
-
             InitializeSaveFileDialog();
             InitializeOpenFileDialog();
-
+            graphics = this.CreateGraphics();
+            graphics.Clear(SystemColors.Control);
         }
 
         private void InitializeButtonsForShape()
@@ -95,8 +103,17 @@ namespace Painter
         {
             imgForButtons.ImageSize = new Size(buttonsForShape[(int)(Button.Ellipse)].Size.Width - 13, buttonsForShape[(int)(Button.Ellipse)].Size.Height - 13);
             imgForButtons.Images.Add(Image.FromFile("../../circle.png"));
-            buttonsForShape[(int)(Button.Ellipse)].ImageList = imgForButtons;
+            imgForButtons.Images.Add(Image.FromFile("../../rectangle.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../triangle.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../rhomb.png"));
+            imgForButtons.Images.Add(Image.FromFile("../../bezier.png"));
+            buttonsForShape[(int)(Button.Rhomb)].ImageList = buttonsForShape[(int)(Button.Triangle)].ImageList = buttonsForShape[(int)(Button.Rectangle)].ImageList
+                = buttonsForShape[(int)(Button.Ellipse)].ImageList = buttonsForShape[(int)(Button.Bezier)].ImageList = imgForButtons;
             buttonsForShape[(int)(Button.Ellipse)].ImageIndex = 0;
+            buttonsForShape[(int)(Button.Rectangle)].ImageIndex = 1;
+            buttonsForShape[(int)(Button.Triangle)].ImageIndex = 2;
+            buttonsForShape[(int)(Button.Rhomb)].ImageIndex = 3;
+            buttonsForShape[(int)(Button.Bezier)].ImageIndex = 4;
             PicterLineWhigth.Image = Image.FromFile("..\\..\\Line3.jpg");
         }
 
@@ -115,23 +132,44 @@ namespace Painter
             // game engines: ioquake, unity, SDL...
 
             // создаём холст - canvas
-            Graphics g = this.CreateGraphics();
-            g.Clear(SystemColors.Control); // задаем цвет заливки холста
 
-            // рисуем все фигуры
-            foreach (Shape s in this.shapes)
+            BufferedGraphicsContext currentContext;
+            BufferedGraphics buffer;
+            // Gets a reference to the current BufferedGraphicsContext
+            currentContext = BufferedGraphicsManager.Current;
+            // Creates a BufferedGraphics instance associated with Form1, and with 
+            // dimensions the same size as the drawing surface of Form1.
+            buffer = currentContext.Allocate(this.CreateGraphics(),
+               this.DisplayRectangle);
+            buffer.Graphics.Clear(SystemColors.Control);
+            
+
+            if(isZooming || isDecreasing)
             {
-                s.Paint(g);
+                if (isZooming) coefficient += coefficient == 3.0f ? 0f : 0.2f;
+                else coefficient -= coefficient == -3.0f ? 0f : 0.2f;
+
+                buffer.Graphics.ScaleTransform(coefficient, coefficient, System.Drawing.Drawing2D.MatrixOrder.Append);  // then scale
+                isZooming = false;
+                isDecreasing = false;
             }
+            
+            
+            // рисуем все фигуры
+            foreach (Shape s in this.shapes) { s.Paint(buffer.Graphics); }
 
             if (isChosen)
             {
                 Pen pen = new Pen(Color.Black);
                 pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
                 pen.Width = 5;
-                g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.White)), frames[chosenElement]);
-                g.DrawRectangle(pen, frames[chosenElement]);
+                buffer.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.White)), frames[chosenElement]);
+                buffer.Graphics.DrawRectangle(pen, frames[chosenElement]);
             }
+
+            // Renders the contents of the buffer to the specified drawing surface.
+            buffer.Render(graphics);
+            buffer.Dispose();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -178,7 +216,30 @@ namespace Painter
             if (activeButton != Button.None)
             {
                 shapeCenter = new Point(e.X, e.Y);
-                shapes.Add(new Ellipse(e.X, e.Y, 0, 0));
+
+
+                switch (activeButton)
+                {
+                    case Button.Ellipse:
+                        shapes.Add(new Ellipse(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Rectangle:
+                        shapes.Add(new Rect(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Triangle:
+                        shapes.Add(new TriangleRight(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Rhomb:
+                        shapes.Add(new Rhomb(e.X, e.Y, 0, 0));
+                        break;
+                    case Button.Bezier:
+                        shapes.Add(new Bezier(e.X, e.Y, 0, 0));
+                        break;
+                }
+
+                shapes[shapes.Count - 1].pen.Color = ColorLineLabel.BackColor;
+                shapes[shapes.Count - 1].pen.Width = Convert.ToInt32(LineWhigth1.GetItemText(this.LineWhigth1.SelectedItem));
+                ((SolidBrush)(shapes[shapes.Count - 1].brush)).Color = ColorBrashLabel.BackColor;
                 frames.Add(new Rectangle(e.X, e.Y, 0, 0));
                 isDrawing = true;
             }
@@ -225,18 +286,43 @@ namespace Painter
                 case "Circle":
                     activeButton = Button.Ellipse;
                     break;
+                case "Triangle":
+                    activeButton = Button.Triangle;
+                    break;
+                case "Rhomb":
+                    activeButton = Button.Rhomb;
+                    break;
+                case "Rectangle":
+                    activeButton = Button.Rectangle;
+                    break;
+                case "Bezier":
+                    activeButton = Button.Bezier;
+                    break;
             }
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape && activeButton == Button.None)
+            if (ModifierKeys == Keys.Control && e.KeyCode == Keys.Add)
+            {
+                isZooming = true;
+                MainForm_Paint(null, null);
+            }
+
+            else if (ModifierKeys == Keys.Control && e.KeyCode == Keys.Subtract)
+            {
+                isDecreasing = true;
+                MainForm_Paint(null, null);
+            }
+
+
+            else if (e.KeyCode == Keys.Escape && activeButton == Button.None)
             {
                 isChosen = false;
                 MainForm_Paint(null, null);
             }
 
-            if (e.KeyCode == Keys.Escape && activeButton != Button.None)
+            else if (e.KeyCode == Keys.Escape && activeButton != Button.None)
             {
                 buttonsForShape[(int)(activeButton)].BackColor = buttonColor;
                 activeButton = Button.None;
@@ -263,30 +349,25 @@ namespace Painter
                 Point center = new Point();
                 center.X = shapeCenter.X <= e.X ? shapeCenter.X : e.X;
                 center.Y = shapeCenter.Y <= e.Y ? shapeCenter.Y : e.Y;
-
-                switch (activeButton)
-                {
-                    case Button.Ellipse:
-                        shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
-                        width = ((Ellipse)shapes[shapes.Count - 1]).width = Math.Abs(shapeCenter.X - e.X) / 2;
-                        height = ((Ellipse)shapes[shapes.Count - 1]).height = Math.Abs(shapeCenter.Y - e.Y) / 2;
-                        frames[frames.Count - 1] = new Rectangle(center.X, center.Y, width * 2, height * 2);
-                        break;
-                    case Button.None:
-                        break;
-                    default:
-                        break;
-                }
-
+                shapes[shapes.Count - 1].point = new Point(center.X, center.Y);
+                width = shapes[shapes.Count - 1].width = Math.Abs(shapeCenter.X - e.X);
+                height = shapes[shapes.Count - 1].height = Math.Abs(shapeCenter.Y - e.Y);
+                frames[frames.Count - 1] = new Rectangle(center.X - 20, center.Y - 20, width + 40, height + 40);
                 MainForm_Paint(null, null);
             }
 
             else if (isResizing) isResizing = false;
         }
 
-
+       
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
+            if (e.Location.X >= 36 && e.Location.Y >= 90)
+            {
+                label1.Text = Convert.ToString(e.Location.X - 36);
+                label2.Text = Convert.ToString(e.Location.Y - 90);
+            }
+
             if (isResizing && e.Button == MouseButtons.Left)
             {
 
@@ -297,11 +378,11 @@ namespace Painter
                 {
                     case FrameEdge.Top:
                         delta = new Point(0, -(e.Y - frames[chosenElement].Top));
-                        shapes[chosenElement].point.Y = e.Y;
+                        shapes[chosenElement].point.Y = e.Y + 20;
                         break;
                     case FrameEdge.Left:
                         delta = new Point(-(e.X - frames[chosenElement].X), 0);
-                        shapes[chosenElement].point.X = e.X;
+                        shapes[chosenElement].point.X = e.X + 20;
                         break;
                     case FrameEdge.Right:
                         delta = new Point(e.X - (frames[chosenElement].Right), 0);
@@ -313,10 +394,25 @@ namespace Painter
                         break;
                 }
 
-                height = ((Ellipse)shapes[chosenElement]).height += delta.Y;
-                width = ((Ellipse)shapes[chosenElement]).width += delta.X;
-                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
-                    width * 2, height * 2);
+                height = shapes[chosenElement].height += 2 * delta.Y;
+                width = shapes[chosenElement].width += 2 * delta.X;
+                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X - 20, shapes[chosenElement].point.Y - 20,
+                   width + 40, height + 40);
+                MainForm_Paint(null, null);
+            }
+
+            else if(isDrawing)
+            {
+                int width = Math.Abs(e.X - shapeCenter.X);
+                int height = Math.Abs(e.Y - shapeCenter.Y);
+
+                int x = e.X < shapeCenter.X ? e.X : shapeCenter.X;
+                int y = e.Y < shapeCenter.Y ? e.Y : shapeCenter.Y;
+
+                shapes[shapes.Count - 1].point.X = x;
+                shapes[shapes.Count - 1].point.Y = y;
+                shapes[shapes.Count - 1].width = width;
+                shapes[shapes.Count - 1].height = height;
                 MainForm_Paint(null, null);
             }
 
@@ -326,32 +422,99 @@ namespace Painter
                 shapes[chosenElement].point = new Point(shapes[chosenElement].point.X - delta.X + e.X,
                     shapes[chosenElement].point.Y - delta.Y + e.Y);
                 delta = new Point(e.X, e.Y);
-                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X, shapes[chosenElement].point.Y,
+                frames[chosenElement] = new Rectangle(shapes[chosenElement].point.X - 20, shapes[chosenElement].point.Y - 20,
                     frames[chosenElement].Width, frames[chosenElement].Height);
                 MainForm_Paint(null, null);
             }
 
             else if (isChosen && IsOnRectacleBorder(e.X, e.Y) != FrameEdge.None) { }
 
-
             else Cursor = Cursors.Arrow;
         }
 
 
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Сохранить"
         {
             seveFileDialog.ShowDialog();
         }
 
         void seveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            string name = seveFileDialog.FileName;
+            string nameFile = seveFileDialog.FileName;                                  // полный путь к файлу
             try
             {
-                using (StreamWriter file = new StreamWriter(name))
+                XDocument xdoc = new XDocument();                                   // создаём документ
+                XElement homeElem = new XElement("svg");                            // создаём корневой элемент(тэг)
+                foreach(var it in shapes)
                 {
-                    //if()
+                    string elemName = "";                                           // имя вложенного элемента
+                    List<XAttribute> att = new List<XAttribute>();                  // коллекция атрибутов вложенного элемента
+                   
+                    if(it is Ellipse)
+                    {
+                        elemName = "ellipse";
+                        Ellipse elem = it as Ellipse;
+                        att.Add(new XAttribute("cx", elem.point.X + elem.width / 2));
+                        att.Add(new XAttribute("cy", elem.point.Y + elem.height / 2));
+                        att.Add(new XAttribute("rx", elem.width / 2));
+                        att.Add(new XAttribute("ry", elem.height / 2));
+                        att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                    }
+                    else
+                    {
+                        att.Add(new XAttribute("x", it.point.X));
+                        att.Add(new XAttribute("y", it.point.Y));
+                        att.Add(new XAttribute("width", it.width));
+                        att.Add(new XAttribute("height", it.height));
+                        if (it is Rect)
+                        {
+                            elemName = "rect";
+                            Rect elem = it as Rect;
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        }
+                        else if (it is Rhomb)
+                        {
+                            elemName = "polygon";
+                            Rhomb elem = it as Rhomb;
+                            string attributeValue = "";
+                            for (int i = 0; i < elem.vertex.Length; ++i)
+                            {
+                                attributeValue += (elem.point.X + elem.vertex[i].X) + "," + (elem.point.Y + elem.vertex[i].Y) + " ";
+                            }
+                            att.Add(new XAttribute("points", attributeValue));
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        }
+                        else if (it is TriangleRight)
+                        {
+                            elemName = "polygon";
+                            TriangleRight elem = it as TriangleRight;
+
+                            string attributeValue = "";
+                            for (int i = 0; i < elem.vertex.Length; ++i)
+                            {
+                                attributeValue += (elem.point.X + elem.vertex[i].X) + "," + (elem.point.Y + elem.vertex[i].Y) + " ";
+                            }
+                            att.Add(new XAttribute("points", attributeValue));
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, elem.brush)));
+                        }
+                        else if (it is Bezier)
+                        {
+                            elemName = "path";
+                            Bezier elem = it as Bezier;
+
+                            string attributeValue = "M" + (elem.point.X + elem.vertex[0].X) + "," + (elem.point.Y + elem.vertex[0].Y) + " c";
+                            for (int i = 1; i < elem.vertex.Length; ++i)
+                            {
+                                attributeValue += elem.vertex[i].X + "," + elem.vertex[i].Y + " ";
+                            }
+                            att.Add(new XAttribute("d", attributeValue));
+                            att.Add(new XAttribute("style", getAttriburStyle(elem.pen, new SolidBrush(Color.FromArgb(0,0,0,0)))));
+                        }
+                    }
+                    homeElem.Add(new XElement(elemName, att));                      // добавляем вложенный элемент в корневой
                 }
+                xdoc.Add(homeElem);                                                 // добавляем корневой элемент со всеми его вложенными элементами в документ
+                xdoc.Save(nameFile);                                                // сохраняем файл
             }
             catch (Exception ex)
             {
@@ -363,14 +526,24 @@ namespace Painter
             }
         }
 
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private string getAttriburStyle(Pen pen, Brush brush)
+        {
+            SolidBrush br = brush as SolidBrush;
+            string s = "fill:";
+            s += (br.Color.A != 0 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");") : ("none;"));
+            
+            s += "strocke-width:" + pen.Width + ";";
+            s += "stroke:rgb(" + pen.Color.R + "," + pen.Color.G + "," + pen.Color.B + ")";
+            return s;
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Открыть"
         {
             openFileDialog.ShowDialog();
         }
         void openFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             var file = openFileDialog.OpenFile();
-            //throw new NotImplementedException();
         }
 
 
@@ -379,6 +552,12 @@ namespace Painter
             colorDialog1.ShowDialog();
             ColorBrashLabel.BackColor = colorDialog1.Color;
             ColorBrashLabel.Tag = colorDialog1.Color;
+
+            if(isChosen)
+            {
+                ((SolidBrush)shapes[chosenElement].brush).Color = ColorBrashLabel.BackColor;
+                MainForm_Paint(null, null);
+            }
         }
 
         private void ColorLineLabel_Click(object sender, EventArgs e)
@@ -386,6 +565,12 @@ namespace Painter
             colorDialog1.ShowDialog();
             ColorLineLabel.BackColor = colorDialog1.Color;
             ColorLineLabel.Tag = colorDialog1.Color;
+            
+            if(isChosen)
+            {
+                shapes[chosenElement].pen.Color = ColorLineLabel.BackColor;
+                MainForm_Paint(null, null);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -394,6 +579,28 @@ namespace Painter
             string pathPict = "..\\..\\Line";
             pathPict += LineWhigth1.Tag + ".jpg";
             PicterLineWhigth.Image = Image.FromFile(pathPict);
+
+            if (isChosen)
+            {
+                shapes[chosenElement].pen.Width = Convert.ToInt32(LineWhigth1.GetItemText(this.LineWhigth1.SelectedItem));
+                MainForm_Paint(null, null);
+            }
+        }
+
+        private void button6_MouseClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("Temlead: \nЗайцев Владимир \n\nProgers: \nШибалович Иван \nВысоких Дмитрий \nАладьин Андрей");
+        }
+
+        private void MainForm_MouseLeave(object sender, EventArgs e)
+        {
+            label1.Text = "";
+            label2.Text = "";
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
 
     }

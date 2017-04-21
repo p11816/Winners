@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace Painter
 {
-    class Rhomb : Shape 
+    class Bezier : Shape
     {
         public Point[] vertex;                            // массив относительных координат вершин
-        public Rhomb(int x, int y, int height, int width)
+
+        public Bezier(int x, int y, int height, int width)
         {
-            point = new Point(x, y);
+            point = new System.Drawing.Point(x, y);
             this.height = height;
             this.width = width;
             vertex = new Point[4];
+            getVertex();
         }
 
         private void getVertex()
         {
-            int halfW = width / 2;
-            int halfH = height / 2;
             vertex[0].X = 0;
-            vertex[0].Y = halfH;
-            vertex[1].X = halfW;
+            vertex[0].Y = 0;
+            vertex[1].X = width;
             vertex[1].Y = 0;
-            vertex[2].X = width;
-            vertex[2].Y = halfH;
-            vertex[3].X = halfW;
+            vertex[2].X = 0;
+            vertex[2].Y = height;
+            vertex[3].X = width;
             vertex[3].Y = height;
         }
 
@@ -39,9 +39,8 @@ namespace Painter
             for (int i = 0; i < p.Length; ++i)
             {
                 p[i] = new Point(point.X + vertex[i].X, point.Y + vertex[i].Y);
-            }            
-            g.FillPolygon(brush, p);
-            g.DrawPolygon(pen, p);
+            } 
+            g.DrawBezier(pen, p[0], p[1], p[2], p[3]);
         }
     }
 }

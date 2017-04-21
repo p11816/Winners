@@ -40,8 +40,8 @@
             this.Button2 = new System.Windows.Forms.Button();
             this.Button3 = new System.Windows.Forms.Button();
             this.Button4 = new System.Windows.Forms.Button();
-            this.Button5 = new System.Windows.Forms.Button();
             this.LeftPanel = new System.Windows.Forms.Panel();
+            this.Button5 = new System.Windows.Forms.Button();
             this.WhigthLine = new System.Windows.Forms.TextBox();
             this.ColorBrashLabel = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
@@ -50,6 +50,9 @@
             this.ColorLineLabel = new System.Windows.Forms.Label();
             this.LineWhigth1 = new System.Windows.Forms.ComboBox();
             this.PicterLineWhigth = new System.Windows.Forms.PictureBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.MenuStrip.SuspendLayout();
             this.LeftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicterLineWhigth)).BeginInit();
@@ -109,9 +112,10 @@
             // 
             // StatusStripBottom
             // 
-            this.StatusStripBottom.Location = new System.Drawing.Point(0, 509);
+            this.StatusStripBottom.AutoSize = false;
+            this.StatusStripBottom.Location = new System.Drawing.Point(0, 494);
             this.StatusStripBottom.Name = "StatusStripBottom";
-            this.StatusStripBottom.Size = new System.Drawing.Size(830, 22);
+            this.StatusStripBottom.Size = new System.Drawing.Size(830, 37);
             this.StatusStripBottom.TabIndex = 1;
             this.StatusStripBottom.Text = "StatusStrip";
             // 
@@ -144,8 +148,9 @@
             this.Button2.Size = new System.Drawing.Size(30, 30);
             this.Button2.TabIndex = 1;
             this.Button2.TabStop = false;
-            this.Button2.Tag = "Circle";
+            this.Button2.Tag = "Rectangle";
             this.Button2.UseVisualStyleBackColor = true;
+            this.Button2.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // Button3
             // 
@@ -154,8 +159,9 @@
             this.Button3.Size = new System.Drawing.Size(30, 30);
             this.Button3.TabIndex = 2;
             this.Button3.TabStop = false;
-            this.Button3.Tag = "Circle";
+            this.Button3.Tag = "Triangle";
             this.Button3.UseVisualStyleBackColor = true;
+            this.Button3.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // Button4
             // 
@@ -164,18 +170,9 @@
             this.Button4.Size = new System.Drawing.Size(30, 30);
             this.Button4.TabIndex = 3;
             this.Button4.TabStop = false;
-            this.Button4.Tag = "Circle";
+            this.Button4.Tag = "Rhomb";
             this.Button4.UseVisualStyleBackColor = true;
-            // 
-            // Button5
-            // 
-            this.Button5.Location = new System.Drawing.Point(2, 152);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(30, 30);
-            this.Button5.TabIndex = 4;
-            this.Button5.TabStop = false;
-            this.Button5.Tag = "Circle";
-            this.Button5.UseVisualStyleBackColor = true;
+            this.Button4.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // LeftPanel
             // 
@@ -188,8 +185,19 @@
             this.LeftPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.LeftPanel.Location = new System.Drawing.Point(0, 90);
             this.LeftPanel.Name = "LeftPanel";
-            this.LeftPanel.Size = new System.Drawing.Size(36, 419);
+            this.LeftPanel.Size = new System.Drawing.Size(36, 404);
             this.LeftPanel.TabIndex = 4;
+            // 
+            // Button5
+            // 
+            this.Button5.Location = new System.Drawing.Point(2, 152);
+            this.Button5.Name = "Button5";
+            this.Button5.Size = new System.Drawing.Size(30, 30);
+            this.Button5.TabIndex = 4;
+            this.Button5.TabStop = false;
+            this.Button5.Tag = "Bezier";
+            this.Button5.UseVisualStyleBackColor = true;
+            this.Button5.Click += new System.EventHandler(this.ShapeButton_Click);
             // 
             // WhigthLine
             // 
@@ -249,6 +257,8 @@
             // 
             // LineWhigth1
             // 
+            this.LineWhigth1.AllowDrop = true;
+            this.LineWhigth1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LineWhigth1.FormattingEnabled = true;
             this.LineWhigth1.Location = new System.Drawing.Point(176, 41);
             this.LineWhigth1.MaxDropDownItems = 5;
@@ -265,11 +275,44 @@
             this.PicterLineWhigth.TabIndex = 7;
             this.PicterLineWhigth.TabStop = false;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(95, 0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(30, 23);
+            this.button6.TabIndex = 15;
+            this.button6.Text = "?";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button6_MouseClick);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(47, 518);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(92, 518);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "label2";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 531);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.LineWhigth1);
             this.Controls.Add(this.ColorLineLabel);
             this.Controls.Add(this.ColorLine);
@@ -284,9 +327,11 @@
             this.KeyPreview = true;
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
+            this.MouseLeave += new System.EventHandler(this.MainForm_MouseLeave);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
@@ -308,7 +353,6 @@
         private System.Windows.Forms.StatusStrip StatusStripTop;
         
         private System.Windows.Forms.Panel LeftPanel;
-        private System.Windows.Forms.Button Button5;
         private System.Windows.Forms.Button Button4;
         private System.Windows.Forms.Button Button3;
         private System.Windows.Forms.Button Button2;
@@ -324,6 +368,10 @@
         private System.Windows.Forms.Label ColorLineLabel;
         private System.Windows.Forms.ComboBox LineWhigth1;
         private System.Windows.Forms.PictureBox PicterLineWhigth;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button Button5;
     }
 }
 
