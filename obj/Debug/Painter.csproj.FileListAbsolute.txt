@@ -28,3 +28,6 @@ D:\Zaycev\Winners\obj\Debug\Painter.csproj.GenerateResource.Cache
 D:\Zaycev\Winners\bin\Debug\Painter.exe
 D:\Zaycev\Winners\bin\Debug\Painter.pdb
 D:\Zaycev\Winners\obj\Debug\Painter.Properties.Resources.resources
+C:\Users\Vova\Desktop\Winners\bin\Debug\Painter.exe.config
+C:\Users\Vova\Desktop\Winners\obj\Debug\Painter.exe
+C:\Users\Vova\Desktop\Winners\obj\Debug\Painter.pdb
