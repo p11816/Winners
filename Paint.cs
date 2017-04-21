@@ -50,7 +50,7 @@ namespace Painter
             saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Xml documents |*.xml";
             saveFileDialog.FileName = "NewFile.xml";
-            saveFileDialog.FileOk += seveFileDialog_FileOk;
+            saveFileDialog.FileOk += saveFileDialog_FileOk;
         }
 
         private void InitializeOpenFileDialog()
@@ -438,7 +438,7 @@ namespace Painter
             saveFileDialog.ShowDialog();
         }
 
-        void seveFileDialog_FileOk(object sender, CancelEventArgs e)
+        void saveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             string nameFile = saveFileDialog.FileName;                                  // полный путь к файлу
             try
