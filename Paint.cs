@@ -495,7 +495,7 @@ namespace Painter
         {
             SolidBrush br = brush as SolidBrush;
             string s = "fill:";
-            s += (br.Color.A == 1 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ";") : ("none;"));
+            s += (br.Color.A != 0 ? ("rgb(" + br.Color.R + "," + br.Color.G + "," + br.Color.B + ");") : ("none;"));
             
             s += "strocke-width:" + pen.Width + ";";
             s += "stroke:rgb(" + pen.Color.R + "," + pen.Color.G + "," + pen.Color.B + ")";
