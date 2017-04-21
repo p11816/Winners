@@ -82,8 +82,6 @@ namespace Painter
             InitializeOpenFileDialog();
             graphics = this.CreateGraphics();
             graphics.Clear(SystemColors.Control);
-            label1.Text = "X: " + Cursor.Position.X;
-            label2.Text = "Y: " + Cursor.Position.Y;
         }
 
         private void InitializeButtonsForShape()
@@ -364,9 +362,6 @@ namespace Painter
 
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
-            label1.Text = "X: " + e.X;
-            label2.Text = "Y: " + e.Y;
-
             if (isResizing && e.Button == MouseButtons.Left)
             {
 
