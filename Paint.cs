@@ -42,15 +42,15 @@ namespace Painter
             None
         }
 
-        private SaveFileDialog seveFileDialog;
+        private SaveFileDialog saveFileDialog;
         private OpenFileDialog openFileDialog;
 
         private void InitializeSaveFileDialog()
         {
-            seveFileDialog = new SaveFileDialog();
-            seveFileDialog.Filter = "Xml documents |*.xml";
-            seveFileDialog.FileName = "NewFile.xml";
-            seveFileDialog.FileOk += seveFileDialog_FileOk;
+            saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Xml documents |*.xml";
+            saveFileDialog.FileName = "NewFile.xml";
+            saveFileDialog.FileOk += seveFileDialog_FileOk;
         }
 
         private void InitializeOpenFileDialog()
@@ -364,8 +364,8 @@ namespace Painter
         {
             if (e.Location.X >= 36 && e.Location.Y >= 90)
             {
-                label1.Text = Convert.ToString(e.Location.X - 36);
-                label2.Text = Convert.ToString(e.Location.Y - 90);
+                label1.Text = "X: " + Convert.ToString(e.Location.X - 36);
+                label2.Text = "Y: " + Convert.ToString(e.Location.Y - 90);
             }
 
             if (isResizing && e.Button == MouseButtons.Left)
@@ -435,12 +435,12 @@ namespace Painter
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)        // вызов меню "Сохранить"
         {
-            seveFileDialog.ShowDialog();
+            saveFileDialog.ShowDialog();
         }
 
         void seveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            string nameFile = seveFileDialog.FileName;                                  // полный путь к файлу
+            string nameFile = saveFileDialog.FileName;                                  // полный путь к файлу
             try
             {
                 XDocument xdoc = new XDocument();                                   // создаём документ
@@ -522,7 +522,7 @@ namespace Painter
             }
             finally
             {
-                seveFileDialog.FileName = "NewFile.xml";
+                saveFileDialog.FileName = "NewFile.xml";
             }
         }
 
@@ -597,11 +597,5 @@ namespace Painter
             label1.Text = "";
             label2.Text = "";
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
